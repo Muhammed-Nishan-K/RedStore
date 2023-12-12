@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  #img-container{
+	z-index: 1;
+	max-width: 500px;
+  height: 380px;
+	position: relative;
+}
+
+#lens{
+	z-index: 2;
+	position: absolute;
+
+	height: 200px;
+	width: 200px;
+  display:none;
+	border:0px solid black;
+	background-repeat: no-repeat;
+	cursor: none;
+
+}
+#featured{
+	max-width: 500px;
+	max-height: 600px;
+
+	cursor: pointer;
+	border: 0px solid black;
+
+}
+</style>
+</head>
+<body style="background: radial-gradient(#fff,#ffd6d6);">
+    <!--Main Navigation-->
+<header>
+    <!-- Jumbotron -->
+    <div class="p-3 text-center  border-bottom">
+      <div class="container">
+        <div class="row gy-3">
+          <!-- Left elements -->
+          <div class="col-lg-2 col-sm-4 col-4">
+            <a href="/"  class="float-start">
+              <img src="images\logo-white.png" height="35" />
+            </a>
+          </div>
+          <!-- Left elements -->
+  
+          <!-- Center elements -->
+          <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+            <div class="d-flex float-end">
+              
+              <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Account</p> </a>
+              <%if(varify==true){%>
+              <a href="/wishlist" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Wishlist</p> </a>
+              <a href="/cartpage" class="border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">My cart</p> </a>
+            <%}%>
+            </div>
+          </div>
+          <!-- Center elements -->
+  
+          <!-- Right elements -->
+          <div class="col-lg-5 col-md-12 col-12">
+            
+          </div>
+          <!-- Right elements -->
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" style="background-color: #3E4144 !important;">
+      <!-- Container wrapper -->
+      <div class="container justify-content-center justify-content-md-between">
+        <!-- Toggle button -->
+        <button class="navbar-toggler  py-2 text-white" type="button" data-mdb-toggle="collapse"
+          data-mdb-target="#navbarLeftAlignExample" aria-controls="navbarLeftAlignExample" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/">HOME</a>
+            </li>
+
+          </ul>
+          <!-- Left links -->
+        </div>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Jumbotron -->
+  </header>
+      
+      <!-- content -->
+      <section class="py-5">
+        <div class="container">
+          <div class="row gx-5">
+            <aside class="col-lg-6">
+              <div class=" rounded-4 mb-3 d-flex justify-content-center">
+                <div  id="img-container">
+                  <div id="lens"></div>
+                  <img style="height: 400px;" id=featured src="primg/<%=product.image[0]%>">
+                </div>
+                
+
+
+              </div>
+              <div style="height: 10px; width: 10;">
+                  
+              </div>
+
+              
+              <div class="d-flex justify-content-center mb-3">
+              <%for(let i=0;i<product.image.length;i++){%>
+              
+                <div onclick="imgChange('primg/<%=product.image[i]%>')">
+                  <img width="60" height="60" class="rounded-2" src="primg/<%=product.image[i]%>" />
+                </div>
+                <div style="width: 2%;"></div>
+                 <%if(i==3){break;}%>
+          
+                
+                <%}%>
+              </div>
+                
+                
+                
+                <!-- <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp" class="item-thumb">
+                  <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp" />
+                </a>
+                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" class="item-thumb">
+                  <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" />
+                </a>
+                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" class="item-thumb">
+                  <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" />
+                </a> -->
+              
+              <!-- thumbs-wrap.// -->
+              <!-- gallery-wrap .end// -->
+            </aside>
+            <main class="col-lg-6">
+              <div class="ps-lg-3">
+                <h4 class="title text-dark">
+                  <%=product.pname%>
+                </h4>
+                <div class="d-flex flex-row my-3">
+                  <div class="text-warning mb-1 me-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="ms-1">
+                      4.5
+                    </span>
+                  </div>
+                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%=product.stock%></span>
+                  <span class="text-success ms-2">In stock</span>
+                </div>
+      
+                <h1>
+                  <p class="card-text" style="margin-left: -8px; font-size: 25px;">₹<%=product.price %>
+                      <span
+                        style="font-size: 15px; text-decoration: line-through; font-weight: bolder; opacity: .7;">₹<%=product.discount %></span>
+                  </p>
+                </h1>
+      
+                <p>
+                 <%=product.description%>
+                </p>
+      
+                
+      
+                <hr />
+      
+                
+
+                <form action="/checkout?id=<%=product._id%>" method="post">
+                  <input style="display: none;" type="number" value="<%=product.discount%>" name="price">
+              <input style="display: none;" type="number" value="<%=product.discount-product.price%>" name="discount">
+                <button type="submit" href="/checkout" class="btn  shadow-0" style="background-color: #FFA530; color: #131921; font-weight: bolder; border-radius: 30px; height: 40px;">Buy Now </button>
+                <a href="/api/addtocart?id=<%=product._id%>" class="btn  shadow-0" style="background-color: #131921; color: white; font-weight: bolder; border-radius: 30px; height: 40px;"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+
+                <a href="/api/wishlist?id=<%=product._id%>" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+              </form>
+              </div>
+            </main>
+          </div>
+        </div>
+      </section>
+      <!-- content -->
+      
+      <section style="width: 100%;" class=" border-top py-4">
+        <div  class="container">
+          <div style="width: 100%;" class="row gx-4">
+            <div style="width: 100%;" class="col-lg-8 mb-4">
+              <div style="width: 100%;" class="border rounded-2 px-3 py-2 bg-white">
+                <!-- Pills navs -->
+                <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                  <li class="nav-item d-flex" role="presentation">
+                    <a class="nav-link d-flex align-items-center justify-content-center w-100 active" id="ex1-tab-1" data-mdb-toggle="pill" href="#ex1-pills-1" role="tab" aria-controls="ex1-pills-1" aria-selected="true">Specification</a>
+                  </li>
+                  <li class="nav-item d-flex" role="presentation">
+                    <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-2" data-mdb-toggle="pill" href="#ex1-pills-2" role="tab" aria-controls="ex1-pills-2" aria-selected="false">Warranty info</a>
+                  </li>
+                  <li class="nav-item d-flex" role="presentation">
+                    <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-3" data-mdb-toggle="pill" href="#ex1-pills-3" role="tab" aria-controls="ex1-pills-3" aria-selected="false">Shipping info</a>
+                  </li>
+                  <li class="nav-item d-flex" role="presentation">
+                    <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-4" data-mdb-toggle="pill" href="#ex1-pills-4" role="tab" aria-controls="ex1-pills-4" aria-selected="false">Reviews</a>
+                  </li>
+                </ul>
+                <!-- Pills navs -->
+      
+                <!-- Pills content -->
+                <div class="tab-content" id="ex1-content">
+                  <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+                    <p>
+                      With supporting text below as a natural lead-in to additional content. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                      enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                      pariatur.
+                    </p>
+                    <div class="row mb-2">
+                      <div class="col-12 col-md-6">
+                        <ul class="list-unstyled mb-0">
+                          <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
+                          <li><i class="fas fa-check text-success me-2"></i>Lorem ipsum dolor sit amet, consectetur</li>
+                          <li><i class="fas fa-check text-success me-2"></i>Duis aute irure dolor in reprehenderit</li>
+                          <li><i class="fas fa-check text-success me-2"></i>Optical heart sensor</li>
+                        </ul>
+                      </div>
+                      <div class="col-12 col-md-6 mb-0">
+                        <ul class="list-unstyled">
+                          <li><i class="fas fa-check text-success me-2"></i>Easy fast and ver good</li>
+                          <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
+                          <li><i class="fas fa-check text-success me-2"></i>Modern style and design</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <table class="table border mt-3 mb-2">
+                      <tr>
+                        <th class="py-2">Display:</th>
+                        <td class="py-2">13.3-inch LED-backlit display with IPS</td>
+                      </tr>
+                      <tr>
+                        <th class="py-2">Processor capacity:</th>
+                        <td class="py-2">2.3GHz dual-core Intel Core i5</td>
+                      </tr>
+                      <tr>
+                        <th class="py-2">Camera quality:</th>
+                        <td class="py-2">720p FaceTime HD camera</td>
+                      </tr>
+                      <tr>
+                        <th class="py-2">Memory</th>
+                        <td class="py-2">8 GB RAM or 16 GB RAM</td>
+                      </tr>
+                      <tr>
+                        <th class="py-2">Graphics</th>
+                        <td class="py-2">Intel Iris Plus Graphics 640</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                    Tab content or sample information now <br />
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                    officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  </div>
+                  <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                    Another tab content or sample information now <br />
+                    Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                    mollit anim id est laborum.
+                  </div>
+                  <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+                    <table style="width: 100%;">
+                      <thead>
+                          <tr>
+                              <th style="width: 33%;">Email</th>
+                              <th style="width: 18%;">Rating</th>
+                              <th>Feedback</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=0;i<product.reviews.length;i++){ %>
+                          <tr>
+                              <td><%= product.reviews[i].email %></td>
+                              <td class="rating"><% for(let j=0;j<product.reviews[i].rating;j++){ %>
+                                <span style="color: gold; font-size: 24px;">&#9733;</span>
+                                <% } %>
+                              </td>
+                              <td class="detailed-review"><%= product.reviews[i].review %></td>
+                          </tr>
+                          <% } %>
+                  
+                          <!-- Add more rows for additional reviews -->
+                      </tbody>
+                  </table>
+                  </div>
+                </div>
+                <!-- Pills content -->
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div style="width: 100%; height: 40px; display: flex;justify-content: center;align-items: center;">
+          <a href="/addreview?id=<%= product._id %>"><button style="background-color: #4CAF50; color: white; border: none; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" >Add Review</button></a>
+        </div>
+      </section>
+      
+      
+
+
+<footer class="text-center text-white container-fluid" style="background-color: #3E4144;">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      
+      <!-- Twitter -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Form -->
+    <section class="">
+      <form action="">
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+          <!--Grid column-->
+          <div class="col-auto">
+            <p class="pt-2">
+              <strong>Sign up for our newsletter</strong>
+            </p>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-5 col-12">
+            <!-- Email input -->
+            <div class="form-outline form-white mb-4 ">
+              <input type="email" id="form5Example2" class="form-control" placeholder="Email" style="background-color: white; color: black;">
+
+          
+            </div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-auto">
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-outline-light mb-4 btn shadow-none" style="background-color: white; color: black;">
+              Subscribe
+            </button>
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </form>
+    </section>
+    <!-- Section: Form -->
+
+    <!-- Section: Text -->
+   
+    <!-- Section: Text -->
+
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          
+
+          <ul class="list-unstyled mb-0" style="line-height: 40px;">
+            <li>
+              <a href="#!" class="text-white">RedStore</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">No.369  Malappuram Kerala </a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">+91 9633063728</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">redstore@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="line-height: 40px;">
+    
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Privacy And Policy</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Shipping Policy</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Terms and Services</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Blogs</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="line-height: 40px;">
+         
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Laptop</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Smartphone</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Speakers</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Watches</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" style="line-height: 40px;">
+     
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Search</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">About us</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">FAQ</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+  </div>
+  <!-- Grid container -->
+  <hr class="hr hr-blurry" />
+  <!-- Copyright -->
+  
+    <span style="opacity: .7; font-size: 13px; margin-bottom: 30px; margin-top: -30px;"> © 2023 Copyright:</span>
+   
+    <a class="text-white" href="https://mdbootstrap.com/" style="opacity: .7; font-size: 12px;">RedStore</a>
+  
+
+
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+<script>
+  function userdetails(id){
+      const productDetailURL = `/product-details?productId=${id}`;
+  
+  // Redirect to the user details page.
+  window.location.href = productDetailURL;
+}
+  
+</script>
+
+ <script>
+  function imgChange(path){
+    const content=document.getElementById("featured")
+    content.src=path;
+  }
+  document.getElementById('img-container').addEventListener('mouseover', function(){
+imageZoom('featured')
+
+})
+
+function imageZoom(imgID){
+let img = document.getElementById(imgID)
+let lens = document.getElementById('lens')
+
+lens.style.backgroundImage = `url( ${img.src} )`
+
+let ratio = 1.5
+
+lens.style.backgroundSize = (img.width * ratio+50) + 'px ' + (img.height * ratio+50) + 'px';
+lens.style.display="block";
+
+img.addEventListener("mousemove", moveLens)
+lens.addEventListener("mousemove", moveLens)
+img.addEventListener("touchmove", moveLens)
+
+function moveLens(){
+/*
+    Function sets sets position of lens over image and background image of lens
+    1 - Get cursor position
+    2 - Set top and left position using cursor position - lens width & height / 2
+    3 - Set lens top/left positions based on cursor results
+    4 - Set lens background position & invert
+    5 - Set lens bounds
+
+    */
+
+    //1
+let pos = getCursor()
+//console.log('pos:', pos)
+
+//2
+let positionLeft = pos.x - (lens.offsetWidth / 2)
+let positionTop = pos.y - (lens.offsetHeight / 2)
+
+//5
+if(positionLeft < 0 ){
+  positionLeft = 0
+}
+
+if(positionTop < 0 ){
+  positionTop = 0
+}
+
+if(positionLeft > img.width - lens.offsetWidth /3 ){
+  positionLeft = img.width - lens.offsetWidth
+}
+
+if(positionTop > img.height - lens.offsetHeight /3 ){
+  positionTop = img.height - lens.offsetHeight
+}
+
+
+//3
+lens.style.left = positionLeft + 'px';
+lens.style.top = positionTop + 'px';
+
+//4
+lens.style.backgroundPosition = "-" + (pos.x * ratio) + 'px -' +  (pos.y * ratio) + 'px'
+}
+
+function getCursor(){
+/* Function gets position of mouse in dom and bounds
+     of image to know where mouse is over image when moved
+    
+    1 - set "e" to window events
+    2 - Get bounds of image
+    3 - set x to position of mouse on image using pageX/pageY - bounds.left/bounds.top
+    4- Return x and y coordinates for mouse position on image
+    
+     */
+
+    let e = window.event
+    let bounds = img.getBoundingClientRect()
+
+    //console.log('e:', e)
+    //console.log('bounds:', bounds)
+    let x = e.pageX - bounds.left
+let y = e.pageY - bounds.top
+x = x - window.pageXOffset;
+y = y - window.pageYOffset;
+
+return {'x':x, 'y':y}
+}
+
+}
+
+imageZoom('featured')
+ </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+></script>
+
+<!-- End of .container -->
+</body>
+
+</html>
+
+      

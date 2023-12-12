@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 12px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .otp-field {
+            flex-direction: row;
+            column-gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .otp-field input {
+            height: 45px;
+            width: 42px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 1.125rem;
+            text-align: center;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .otp-field input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+            border-color: #007bff;
+        }
+
+        .otp-field input::placeholder {
+            color: #999;
+        }
+
+        .otp-field input::-webkit-inner-spin-button,
+        .otp-field input::-webkit-outer-spin-button {
+            display: none;
+        }
+
+        .resend {
+            font-size: 12px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: black;
+            font-size: 12px;
+            text-align: right;
+            font-family: monospace;
+        }
+
+        .footer a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body style="background: radial-gradient(#fff, #ffd6d6);">
+    <section class="container-fluid bg-body-tertiary d-flex align-items-center justify-content-center"
+        style="height: 89vh;">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card bg-white mb-5 border-0">
+                <div class="card-body p-5 text-center">
+                    <h4 class="mb-4">Verify</h4>
+                    <p class="mb-4">Your code was sent to you via email</p>
+
+                    <form action="/api/forgetcompare?email=<%=email%>&id=<%=id%>" method="POST">
+                        <input name="email" type="text" value="<%=email%>" style="display: none;" />
+                        <div class="otp-field mb-4">
+                            <input name="a" type="number" placeholder="●" maxlength="1" />
+                            <input name="b" type="number" placeholder="●" maxlength="1" disabled />
+                            <input name="c" type="number" placeholder="●" maxlength="1" disabled />
+                            <input name="d" type="number" placeholder="●" maxlength="1" disabled />
+                        </div>
+                        <%if(status==true){%>
+                            <p style="color: red;">code does not match</p>
+                        <%}%>
+                        <button class="btn btn-primary mb-3">
+                            Verify
+                        </button>
+                    </form>
+
+                    <p class="resend text-muted mb-0">
+                        Didn't receive code? <a href="/resendotp?email=<%=email%>&id=<%=id%>">Request again</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        const inputs = document.querySelectorAll(".otp-field > input");
+
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+                if (e.target.value.length === 1) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].removeAttribute("disabled");
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && index > 0 && !input.value) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

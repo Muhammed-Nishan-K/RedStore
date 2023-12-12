@@ -1,0 +1,84 @@
+<!-- include footer -->
+<%- include('include/_adminbase.ejs') %>
+<!-- /include footer -->
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 50px;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .custom-file-label::after {
+        content: "Browse";
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<!-- CONTENT -->
+<section id="content">
+    <!-- MAIN -->
+    <div class="container">
+        <h2 class="mb-4">Add Image</h2>
+
+        <!-- Form to add an image -->
+        <form action="/api/img?id=<%= id %>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Image</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <label class="custom-file-label" for="image">Choose file</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Image</button>
+        </form>
+    </div>
+    <section>
+        <div class="container my-5">
+          <header style="width: 100%; display: flex;justify-content: center;" class="mb-4">
+            <h3>Images</h3>
+          </header>
+      
+          <div class="row">
+            <% for(var i = 0; i < img.length; i++) { %>
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+              <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
+                  <img src="primg/<%=img[i]%>" class="card-img-top" style="aspect-ratio: 1 / 1" />
+                  <a href="/api/deleteimg?id=<%=id%>&imgOne=<%=img[i]%>"  class="btn btn-light border px-2 pt-2 icon-hover" ><i class="fas fa-trash fa-lg text-secondary px-1"></i></a>
+              </div>
+              
+            </div>
+            
+            <% }%>
+              </div>
+        </div>
+      </section>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- MAIN -->
+</section>
+<!-- CONTENT -->
+</body>
+</html>

@@ -1,0 +1,172 @@
+
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Wallet - E-commerce</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
+  <style>
+    .wallet-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .wallet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .wallet-balance {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div style="width: 100%; display: flex;justify-content: center;align-items: center; height: 600px;">
+
+<div style="padding: 100px;border-radius: 10px;" class="wallet-container bg-light">
+  <div class="wallet-header">
+    <h2>User Wallet</h2>
+    <span class="wallet-balance">₹<%= user.wallet %>.00</span>
+  </div>
+
+  <!-- Transaction History -->
+  <h4>Transaction History</h4>
+  <div style="width: auto; height: 200px; overflow: scroll;">
+    <ul class="list-group">
+      <% for(let i=user.walletdetails.length-1;i>=0;i--){%>
+        <% if(user.walletdetails[i].mode=='deposit'){ %>
+      <li style="color: green;" class="list-group-item">+ ₹<%= user.walletdetails[i].amount %>.00 - <%= user.walletdetails[i].mode %> (<%= user.walletdetails[i].date %>) <%= user.walletdetails[i].time %> </li>
+      <% }else{ %>
+        
+      <li style="color: red;" class="list-group-item">- ₹<%= user.walletdetails[i].amount %>.00 - <%= user.walletdetails[i].mode %> (<%= user.walletdetails[i].date %>) <%= user.walletdetails[i].time %> </li>
+      
+        <% } %>
+      <% } %>
+  
+      <!-- Add more transaction history items as needed -->
+    </ul>
+  </div>
+  
+
+  <!-- Deposit and Withdraw Buttons -->
+  <div class="mt-4">
+    <button class="btn btn-success" data-toggle="modal" data-target="#depositModal">Deposit</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+  </div>
+
+  <!-- Deposit Modal -->
+  <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="depositModalLabel">Deposit Money</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <a href="/addtowallet">
+            <button type="submit" class="btn btn-primary w-100 mt-2">Add To Wallet</button>
+            </a>
+            
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Withdraw Modal -->
+  <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="withdrawModalLabel">Withdraw Money</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Add withdraw form here -->
+          <p>Withdraw form goes here</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger">Withdraw</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $("#checkout-form").submit((e) => {
+    e.preventDefault();
+    $.ajax({
+      url: `/deposit`,
+      method: 'post',
+      data: $('#checkout-form').serialize(),
+      success: (response) => {
+        if (response.url) {
+          return window.location.href = response.url;
+        }
+        razorpayPayment(response);
+      },
+    });
+  });
+  function razorpayPayment(order) {
+    var options = {
+      "key": "rzp_test_0uyYQwL3E1zyEp",
+      "amount": order.amount,
+      "currency": "INR",
+      "name": "infinity",
+      "description": "Test Transaction",
+      "image": "",
+      "order_id": order.razorpay_order_id,
+      "handler": function (response) {
+        alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+        window.location.href = '';
+        
+      },
+      "prefill": {
+        "name": "",
+        "email": "",
+        "contact": "9000090000"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#232F3E;"
+      }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+  }
+</script>
+
+<script>
+// Add an event listener to the button
+document.getElementById('rzp-button').addEventListener('click', function () {
+    // Trigger Razorpay modal
+    startRazorpayPayment();
+});
+</script>
+
+</body>
+</html>

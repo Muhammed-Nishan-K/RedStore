@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  
+</style>
+</head>
+<body style="background: radial-gradient(#fff,#ffd6d6);">
+    <!--Main Navigation-->
+<header>
+    <!-- Jumbotron -->
+    <div class="p-3 text-center  border-bottom">
+      <div class="container">
+        <div class="row gy-3">
+          <!-- Left elements -->
+          <div class="col-lg-2 col-sm-4 col-4">
+            <a href="/"  class="float-start">
+              <img src="images\logo-white.png" height="35" />
+            </a>
+          </div>
+          <!-- Left elements -->
+          <div class="col-lg-5 mt-md-4 col-md-12 col-12">
+            <form action="/ourstore" method="get">
+            <div class="input-group  float-center">
+              <div class="form-outline bg-white" style="border-radius: 5px;">
+                <input type="search" value="<%= searchQuery %>" id="form1" name="search" class="form-control" />
+                <label class="form-label" for="form1">Search</label>
+              </div>
+              <button type="submit" class="btn shadow-0" >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+          </div>
+          <!-- Center elements -->
+          <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+            <div class="d-flex float-end">
+              
+              <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Account</p> </a>
+              <%if(varify==true){%>
+              <a href="/wishlist" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Wishlist</p> </a>
+              <a href="/cartpage" class="border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">My cart</p> </a>
+            <%}%>
+            </div>
+          </div>
+          <!-- Center elements -->
+  
+          <!-- Right elements -->
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" style="background-color: #3E4144 !important;">
+      <!-- Container wrapper -->
+      <div class="container justify-content-center justify-content-md-between">
+        <!-- Toggle button -->
+        <button class="navbar-toggler  py-2 text-white" type="button" data-mdb-toggle="collapse"
+          data-mdb-target="#navbarLeftAlignExample" aria-controls="navbarLeftAlignExample" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Navbar dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                data-mdb-toggle="dropdown" aria-expanded="false">
+                SHOW CATEGORIES
+              </a>
+              <!-- Dropdown menu -->
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% for(let i=0;i<category.length;i++){%>
+                <li>
+                  <a class="dropdown-item " style="color: white; background-color: #3E4144;" href="/ourstore?category=<%= category[i].catname %>&search="><%=category[i].catname%></a>
+                </li>
+                <%}%>
+                
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/">HOME</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/ourstore?category=all&search=<%= searchQuery %>">OUR STORE</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">BLOGS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">CONTACT</a>
+            </li>
+
+          </ul>
+          <!-- Left links -->
+        </div>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Jumbotron -->
+  </header>
+  
+
+
+<div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
+  <div class="carousel-inner">
+    <% for(i=0;i<banner.length;i++){ %>
+    <div class="carousel-item active" style="height: 500px;">
+      <img style="height: 100%;" src="primg/<%=banner[i].image%>" class="d-block w-100" alt="...">
+    </div>
+    <% } %>
+    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button> 
+   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  <!-- Jumbotron -->
+
+
+<!-- Products -->
+<section>
+  <div class="container my-5">
+    <header style="width: 100%; display: flex;justify-content: center;" class="mb-4">
+      <h3>Featured products</h3>
+    </header>
+
+    <div class="row">
+      <% for(var i = 0; i < product.length; i++) { %>
+        <div  class="col-lg-3 col-md-6 col-sm-6 d-flex3" onclick="userdetails('<%=product[i]._id%>')">
+
+          <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
+            <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
+              <img src="primg/<%=product[i].image[0]%>"
+                style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
+                class="card-img-top" />
+            </div>
+            <% var shortPname=product[i].productName.slice(0, 25); %>
+              <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
+              <div class="card-body d-flex flex-column">
+                <h6 class="card-text" style="font-size: 18px; margin-left: -8px;">
+                  <%=shortPname %>..
+                </h6>
+                <p class="card-text" style="margin-left: -8px; opacity: .7; margin-bottom: 6px;">
+                  <%=product[i].category %>
+                </p>
+                <h1>
+                  <p class="card-text" style="margin-left: -8px; font-size: 25px;">₹<%=product[i].price%>
+                      <span
+                        style="font-size: 15px; text-decoration: line-through; font-weight: bolder; opacity: .7;">₹<%=product[i].discount %></span>
+                  </p>
+                </h1>
+                <p class="card-text" style="opacity: .8;margin-left: -8px; margin-bottom: -18;">Free Delivery
+                </p>
+                <div
+                  style="width: 100%;  display: flex; justify-content: end; height: aute; margin-bottom: -35; text-align: center;">
+                  <p
+                    style="margin-top: -10px; cursor: pointer;  font-family: 'Itim', cursive; font-size: 20px; margin-right: -12px; font-weight: 700; ">
+                    M<span
+                      style="font-family: 'Jockey One', sans-serif; color: green; font-weight: 400; font-size: 15px;">Assured</span>
+                  </p>
+                </div>
+              </div>
+          </div>
+        </div>
+      <%if(i==3){%>
+      <%  break;%>
+      <%}%>
+      <% }%>
+        </div>
+  </div>
+</section>
+<div class="bg-primary text-white py-5" style="background-image: url('images/pix.PNG');background-size: 100% 100%; background-repeat: no-repeat;height: 550px;">
+    
+  <div class="container py-5">
+    <h1>
+      Best products & <br />
+      brands in our store
+    </h1>
+    <p>
+      Trendy Products, Factory Prices, Excellent Service
+    </p>
+    <button type="button" class="btn btn-outline-light">
+      Learn more
+    </button>
+    <button type="button" class="btn btn-light shadow-0 text-primary pt-2 border border-white">
+      <span class="pt-1">Purchase now</span>
+    </button>
+  </div>
+</div>
+<div class="container my-5">
+  <div class="row row-cols-0 row-cols-md-2 g-4">
+    <div class="col">
+      <div  class="card">
+        <img src="images/istockphoto-1162734086-612x612.jpg" class="card-img-top" alt="..."style="height: 500px;">
+  
+      </div>
+    </div>
+    <div class="col">
+      <div  class="card">
+        <img src="images/watch 2.jpg" class="card-img-top" alt="..."style="height: 500px;">
+  
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+<div class="bg-primary text-white py-5" style="background-image: url('images/attractive-enthusiastic-armenian-young-woman-curly-hair-pointing-looking-intrigued-left-show-index-fingers-awesome-blank-space-advertisement-smirking-joyfully-introducing-product-white-background.jpg');background-size: 100% 100%; background-repeat: no-repeat;height: 550px;">
+    
+  <div class="container py-5" style=" color: black;">
+    <h1>
+      Best products & <br />
+      brands in our store
+    </h1>
+    <p>
+      Trendy Products, Factory Prices, Excellent Service
+    </p>
+    <button type="button" class="btn btn-outline-dark" style=" color: black;">
+      Learn more
+    </button>
+    <button type="button" class="btn btn-dark shadow-0 text-primary pt-2 border border-white">
+      <span class="pt-1" style=" color: rgb(255, 255, 255);">Purchase now</span>
+    </button>
+  </div>
+</div>
+<section>
+  <div class="container my-5">
+
+
+    <div class="row">
+      <% for(var i = 0; i < product.length; i++) { %>
+        <div class="col-lg-3 col-md-6 col-sm-6 d-flex" onclick="userdetails('<%=product[i]._id%>')">
+
+          <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
+            <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
+              <img src="primg/<%=product[i].image[0]%>"
+                style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
+                class="card-img-top" />
+            </div>
+            <% var shortPname=product[i].productName.slice(0, 25); %>
+              <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
+              <div class="card-body d-flex flex-column">
+                <h6 class="card-text" style="font-size: 18px; margin-left: -8px;">
+                  <%=shortPname %>..
+                </h6>
+                <p class="card-text" style="margin-left: -8px; opacity: .7; margin-bottom: 6px;">
+                  <%=product[i].category %>
+                </p>
+                <h1>
+                  <p class="card-text" style="margin-left: -8px; font-size: 25px;">₹<%=product[i].price %>
+                      <span
+                        style="font-size: 15px; text-decoration: line-through; font-weight: bolder; opacity: .7;">₹<%=product[i].discount %></span>
+                  </p>
+                </h1>
+                <p class="card-text" style="opacity: .8;margin-left: -8px; margin-bottom: -18;">Free Delivery
+                </p>
+                <div
+                  style="width: 100%;  display: flex; justify-content: end; height: aute; margin-bottom: -35; text-align: center;">
+                  <p
+                    style="margin-top: -10px; cursor: pointer;  font-family: 'Itim', cursive; font-size: 20px; margin-right: -12px; font-weight: 700; ">
+                    M<span
+                      style="font-family: 'Jockey One', sans-serif; color: green; font-weight: 400; font-size: 15px;">Assured</span>
+                  </p>
+                </div>
+              </div>
+          </div>
+        </div>
+      <%if(i==3){%>
+        <%  break;%>
+        <%}%>
+      <% }%>
+        </div>
+  </div>
+</section>
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->

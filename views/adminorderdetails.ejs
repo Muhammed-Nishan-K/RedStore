@@ -1,0 +1,82 @@
+<!-- include header -->
+<%- include('include/_adminbase') %>
+<!-- /include header -->
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<section id="content">
+    <!-- NAVBAR -->
+
+    <!-- NAVBAR -->
+
+    <!-- MAIN -->
+    <main>
+    
+<header class="text-dark text-center py-4 mb-4">
+    <h1 class="display-4">Order Details</h1>
+</header>
+<% for(let i=0;i<order.productName.length;i++){ %>
+<div class="container my-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Order <%= order._id %></h2>
+            <p class="card-text"><strong>Date:</strong><%= order.date %></p>
+            
+            <h3 class="mt-4">Product</h3>
+            <ul class="list-unstyled">
+                <li><%= order.productName[i].productName %> - Quantity: <%= order.productName[i].quantity %> - $<%= order.productName[i].price %> each</li>
+                <!-- Add more items as needed -->
+            </ul>
+            
+            <h3>Billing Information</h3>
+            <p class="text-muted mb-0">City :<%=order.address[0].city %><br>State :<%=order.address[0].state %><br>Phone 1 :<%=order.address[0].line1 %><br>Phone 2:<%=order.address[0].line2 %><br>PIN :<%=order.address[0].pin %></p>
+            
+            <h3>Payment Details</h3>
+            <p>Payment Method: Credit Card ending in ****1234</p>
+            
+            <h3>Order Status</h3>
+            <% if(order.status=='pending'){ %>
+                <p style="background-color: rgb(201, 201, 64); width: 100px; display: flex;justify-content: center; border-radius: 30px;"><span  class="status pending"><%=order.status  %></span></p>
+                <% }else if(order.status=='Shipped'){ %>
+                    <p style="background-color: brown; width: 100px; display: flex;justify-content: center; border-radius: 30px;"><span class="status shipped"><%=order.status  %></span></p>
+                <% }else if(order.status=='Delivered'){ %>
+                    <p style="background-color: green; width: 100px; display: flex;justify-content: center; border-radius: 30px;" > <span class="status" style="background-color: green;"><%=order.status %></span></p>
+                <% }else if(order.status=='Canceled'){ %>
+                    <p style="background-color: red; width: 100px; display: flex;justify-content: center; border-radius: 30px;"> <span class="status" style="background-color: red;"><%=order.status  %></span></p>
+                    <% }else if(order.status=='Returned'){ %>
+                        <p style="background-color: brown; width: 100px; display: flex;justify-content: center; border-radius: 30px;" ><span class="status" style="background-color: brown;"><%=order.status  %></span></p>
+               <% } %>
+            
+            <div class="mt-4">
+                <a href="#" class="btn btn-dark mr-2">Print Receipt</a>
+                <a href="#" class="btn btn-dark">Contact Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+</main>
+<!-- MAIN -->
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    
+</body>
+</html>

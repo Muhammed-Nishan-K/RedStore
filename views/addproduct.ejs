@@ -1,0 +1,139 @@
+<!-- include footer -->
+<%- include('include/_adminbase.ejs') %>
+<!-- /include footer -->
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-top: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
+
+    .custom-file-label::after {
+        content: "Choose image";
+    }
+
+    .custom-file-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .custom-file-label::after {
+        content: "Browse";
+    }
+
+    .custom-file {
+        overflow: hidden;
+    }
+
+    .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+
+    .custom-file-input::before {
+        content: 'Choose image';
+        display: inline-block;
+        background: linear-gradient(top, #f9f9f9, #e3e3e3);
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 5px 8px;
+        outline: none;
+        white-space: nowrap;
+        cursor: pointer;
+        text-shadow: 1px 1px #fff;
+        font-weight: 700;
+        font-size: 10pt;
+        margin-right: 5px;
+    }
+
+    .custom-file-input:hover::before {
+        border-color: black;
+    }
+
+    .custom-file-input:active::before {
+        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+    }
+</style>
+
+<!-- CONTENT -->
+<section id="content">
+    <!-- MAIN -->
+    <div class="container">
+        <h2 class="mb-4">Add Product</h2>
+
+        <!-- Form to add a new product -->
+        <form action="/api/addproduct" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="productName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="category">
+                    <% for(var i = 0; i < cat.length; i++) { %>
+                    <option value="<%=cat[i].catname%>"><%=cat[i].catname%></option>
+                    <% } %>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Product Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Actual Product Price (₹)</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" min="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">price before Discount</label>
+                <input type="number" class="form-control" id="quantity" name="Discount" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Product Image (Only .jpg, .jpeg, .png)</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+                    <label class="custom-file-label" for="image">Choose image</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- MAIN -->
+</section>
+<!-- CONTENT -->
+</body>
+</html>

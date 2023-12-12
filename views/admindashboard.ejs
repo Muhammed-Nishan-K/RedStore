@@ -1,0 +1,135 @@
+
+
+<!-- include footer -->
+<%- include('include/_adminbase.ejs') %>
+<!-- /include footer -->
+<style>
+    .close {
+        transition: background-color 0.3s;
+    }
+
+    .close:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download'></i>
+					<span class="text"  data-toggle="modal" data-target="#myModal">Download PDF</span>
+				</a>
+			</div>
+			<div class="modal" id="myModal" style="background: rgba(0, 0, 0, 0.5);">
+				<div class="modal-dialog" style="max-width: 600px; margin: 10% auto;">
+					<div class="modal-content" style="border-radius: 10px; overflow: hidden;">
+			
+						<!-- Modal Header -->
+						<div class="modal-header" style="background-color: #3498db; color: #fff; border-bottom: none;">
+							<h4 class="modal-title">Download Sales Report</h4>
+							<button type="button" class="close" data-dismiss="modal" style="color: #fff; background-color: #3498db; border: none; border-radius: 5px; padding: 5px 10px;">
+								&times;
+							</button>
+						</div>
+			
+						<!-- Modal body -->
+						<div class="modal-body" style="padding: 20px;">
+							<!-- Add this form inside your modal body -->
+						<form id="pdfForm" method="post" action="/download-pdf">
+							<div class="form-group">
+								<label for="dateFilter" style="font-weight: bold; color: #555;">Choose a filter:</label>
+								<select class="form-control" name="dateFilter" id="dateFilter" style="border: 1px solid #ccc; border-radius: 5px; padding: 8px;">
+									<option value="weekly">Weekly</option>
+									<option value="daily">Daily</option>
+									<option value="yearly">Yearly</option>
+								</select>
+							</div>
+							<br>
+							<button type="submit" class="btn btn-primary" style="background-color: #3498db; border: none; padding: 10px 20px;">Download</button>
+						</form>
+
+						</div>
+			
+						<!-- Modal footer -->
+						<div class="modal-footer" style="border-top: none;">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+			
+					</div>
+				</div>
+			</div>
+			
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3><%= ordercount %></h3>
+						<p>New Order</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3><%=usercount %></h3>
+						<p>Visitors</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3><%=totalsale %></h3>
+						<p>Total Sales</p>
+					</span>
+				</li>
+			</ul>
+
+
+			
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Popper.js (for Bootstrap 4) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your custom scripts -->
+<script>
+    $(document).ready(function(){
+        // This script will handle the modal behavior
+        $('#myModal').on('show.bs.modal', function (e) {
+            // Code to execute when the modal is about to be shown
+        });
+
+        // Additional custom scripts if needed
+    });
+</script>
+	
+
+</body>
+</html>

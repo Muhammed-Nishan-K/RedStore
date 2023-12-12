@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+<link rel="icon" type="image/png" href="../assets/img/Screenshot 2023-11-05 095552.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Itim&family=Jockey+One&display=swap" rel="stylesheet">
+
+<!-- include footer -->
+<%- include('include/_header.ejs') %>
+<!-- /include footer -->
+
+<section id="content">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+
+<section class=" my-5" style="min-height: 100vh;">
+    <div class="container">
+        <div class="row">
+            <h5>Your Orders</h5>
+            <div class="col-lg-9">
+                <% if (order.length> 0) { %>
+                    <% for (let i=0; i < order.length; i++) { %>
+                        
+                        <div class="card mb-4">
+                            <% for (let j=0; j < order[i].productName.length; j++) { %>
+                            <div class="card-body">
+                                <p style="font-size: 12px;" class="card-title">Order ID: <span
+                                        style="font-weight: bold;">
+                                        <%= order[i]._id %>
+                                    </span></p>
+                               
+                                    <div class="row gy-3 mt-4">
+                                        <div class="col-2">
+                                            <img src="/primg/<%= order[i].productName[j].image[0] %>"
+                                                class="img-fluid" style="height: 100px; width: 90px;" alt="<%= order[i].productName[j].productName %>" />
+                                        </div>
+                                        <div
+                                            class="col-8 d-flex flex-column align-items-start d-flex justify-content-center">
+                                            <h6 class="card-subtitle mb-2 text-muted text-center">
+                                                <%= order[i].productName[j].productName %>
+                                            </h6>
+                                            <p class="card-text text-muted text-center">
+                                                <%= order[i].productName[j].category %>
+                                            </p> 
+                                        </div>
+                                        <%if(order[i].status=='pending'){%>
+                                        <div class="col-2 d-flex align-items-center">
+                                            <a href="/api/cancelorder?id=<%= order[i]._id %>">
+                                                <button class="btn btn-outline-primary">Cancel</button>
+                                            </a>
+                                            
+                                        </div>
+                                        <%}else if(order[i].status=='Canceled'){%>
+                                            <div class="col-2 d-flex align-items-center">
+                                                <button class="btn btn-outline-primary">Canceled</button>
+                                            </div>
+                                        <%}else if(order[i].status=='delevered'){%>
+                                        <div class="col-2 d-flex align-items-center">
+                                            <a href="">
+                                                <button class="btn btn-outline-primary">Return</button>
+                                            </a>
+                                           
+                                        </div>
+                                        <%}%>
+                                        <div>
+                                            <a href="/orderdetails?id=<%= order[i]._id %>&index=<%= j %>" style="background-color: rgb(245, 234, 234);" class="btn border-shadow update">
+                                                <p style="padding: 0px;margin: 0px; color: rgb(0, 0, 0);">Details</p>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                
+                                        <script>
+                                            function returnProduct(orderId, productId) {
+                                                alert('Return product clicked! Order ID: ' + orderId + ', Product ID: ' + productId);
+                                            }
+                                        </script>
+                                     </div>
+                                     <% } %>
+                                     <% if(order[i].status=='Delivered'){ %>
+                                        <a href="/api/invoice?id=<%=order[i]._id  %>" style="background-color: rgb(245, 234, 234);" class="btn border-shadow update">
+                                            <p style="padding: 0px;margin: 0px; color: rgb(0, 0, 0);">Download Invoive</p>
+                                        </a>
+                                        <% } %>
+                                 </div>
+                                 
+                                 <% } %>
+                                     <% } else { %>
+                                          <p>No Items In Orders</p>
+                                  <% } %>
+                              </div>
+                          </div>
+                     </div>
+                </section>
+
+
+        <!-- include footer -->
+
+         <!-- /include footer -->
+
+

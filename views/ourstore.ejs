@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+<link rel="icon" type="image/x-icon" href="images/fav.png">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+<style>
+  .card-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2; /* number of lines to show */
+  }
+</style>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  
+</style>
+</head>
+<body style="background: radial-gradient(#fff,#ffd6d6);">
+    <!--Main Navigation-->
+<header>
+    <!-- Jumbotron -->
+    <div class="p-3 text-center  border-bottom">
+      <div class="container">
+        <div class="row gy-3">
+          <!-- Left elements -->
+          <div class="col-lg-2 col-sm-4 col-4">
+            <a href="/"  class="float-start">
+              <img src="images\logo-white.png" height="35" />
+            </a>
+          </div>
+          <!-- Left elements -->
+  
+          <!-- Center elements -->
+          <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+            <div class="d-flex float-end">
+              
+              <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Account</p> </a>
+              <a href="/wishlist" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Wishlist</p> </a>
+              <a href="/cartpage" class="border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">My cart</p> </a>
+
+            </div>
+          </div>
+          <!-- Center elements -->
+  
+          <!-- Right elements -->
+          <div class="col-lg-5 col-md-12 col-12">
+            
+          </div>
+          <!-- Right elements -->
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" style="background-color: #3E4144 !important;">
+      <!-- Container wrapper -->
+      <div class="container justify-content-center justify-content-md-between">
+        <!-- Toggle button -->
+        <button class="navbar-toggler  py-2 text-white" type="button" data-mdb-toggle="collapse"
+          data-mdb-target="#navbarLeftAlignExample" aria-controls="navbarLeftAlignExample" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Navbar dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                data-mdb-toggle="dropdown" aria-expanded="false">
+                SHOW CATEGORIES
+              </a>
+              <!-- Dropdown menu -->
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item " style="color: white; background-color: #3E4144;" href="#">LAPTOP</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">SMARTPHONE</a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">HEADSET</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">WATCHES</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/">HOME</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/ourstore">OUR STORE</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">BLOGS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">CONTACT</a>
+            </li>
+
+          </ul>
+          <!-- Left links -->
+        </div>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Jumbotron -->
+  </header>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"></script>
+    <!-- sidebar + content -->
+    <section class="">
+      <div class="container">
+        <div class="row">
+          <!-- sidebar -->
+          <div class="col-lg-3 mt-5">
+            <!-- Toggle button -->
+            <button class="btn btn-outline-secondary mb-3 w-100 d-lg-none" type="button" data-mdb-toggle="collapse"
+              data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span>Show filter</span>
+            </button>
+            <!-- Collapsible wrapper -->
+            <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
+              <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button text-dark bg-light" type="button" data-mdb-toggle="collapse"
+                      data-mdb-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                      aria-controls="panelsStayOpen-collapseOne">
+                      Shop By Categories
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne">
+                    <div class="accordion-body">
+                      <ul class="list-unstyled">
+                        <li><a href="/ourstore?category=all" class="text-dark">All</a></li>
+                        <% for(let i=0;i<category.length;i++){ %>
+                          <li><a href="/ourstore?category=<%= category[i].catname %>&search=" class="text-dark">
+                              <%= category[i].catname %>
+                            </a></li>
+                          <% } %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button text-dark bg-light" type="button" data-mdb-toggle="collapse"
+                      data-mdb-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
+                      aria-controls="panelsStayOpen-collapseTwo">
+                      Brands
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+                    aria-labelledby="headingTwo">
+                    <div class="accordion-body">
+                      <div>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                          <div class="accordion-body">
+                            <div>
+                              <!-- Checked checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" checked />
+                                <label class="form-check-label" for="flexCheckChecked1">Mercedes</label>
+                                <span class="badge badge-secondary float-end">120</span>
+                              </div>
+                              <!-- Checked checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked />
+                                <label class="form-check-label" for="flexCheckChecked2">Toyota</label>
+                                <span class="badge badge-secondary float-end">15</span>
+                              </div>
+                              <!-- Checked checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" checked />
+                                <label class="form-check-label" for="flexCheckChecked3">Mitsubishi</label>
+                                <span class="badge badge-secondary float-end">35</span>
+                              </div>
+                              <!-- Checked checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" checked />
+                                <label class="form-check-label" for="flexCheckChecked4">Nissan</label>
+                                <span class="badge badge-secondary float-end">89</span>
+                              </div>
+                              <!-- Default checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                <label class="form-check-label" for="flexCheckDefault">Honda</label>
+                                <span class="badge badge-secondary float-end">30</span>
+                              </div>
+                              <!-- Default checkbox -->
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                <label class="form-check-label" for="flexCheckDefault">Suzuki</label>
+                                <span class="badge badge-secondary float-end">30</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function () {
+                            // Get all checkboxes
+                            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                        
+                            // Add event listener to each checkbox
+                            checkboxes.forEach(function (checkbox) {
+                              checkbox.addEventListener('change', updateUrl);
+                            });
+                        
+                            // Function to update the URL based on checked checkboxes
+                            function updateUrl() {
+                              const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+                              const categories = checkedCheckboxes.map(checkbox => checkbox.value);
+                        
+                              // Build the new URL
+                              const currentUrl = new URL(window.location.href);
+                              
+                              // Replace the current Category parameter with the updated one
+                              currentUrl.searchParams.set('Category', categories.join(','));
+                        
+                              // Replace URL encoding with commas
+                              const updatedUrl = currentUrl.toString().replace(/%2C/g, ',');
+                        
+                              // Replace the current URL with the updated one
+                              window.history.replaceState({}, '', updatedUrl);
+                            }
+                          });
+                        </script>
+                        
+                        
+                            <!-- Checked checkbox -->
+
+                            <!-- Checked checkbox -->
+
+                            <!-- Checked checkbox -->
+
+                            <!-- Default checkbox -->
+
+                            <!-- Default checkbox -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button text-dark bg-light" type="button" data-mdb-toggle="collapse"
+                      data-mdb-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                      aria-controls="panelsStayOpen-collapseThree">
+                      Price
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
+                    aria-labelledby="headingThree">
+                    <div class="accordion-body">
+                      <!-- <div class="range">
+                      <input type="range" class="form-range" id="customRange1" />
+                    </div> -->
+                    <form action="/api/pricefilter?cat=<%=cat%>" method="post">
+                      <div class="row mb-3">
+                        <div class="col-6">
+                          <p class="mb-0">
+                            Min
+                          </p>
+                          <div class="form-outline">
+                            <input type="number" id="typeNumber" name="min" class="form-control" />
+                            <label class="form-label" for="typeNumber">min</label>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <p class="mb-0">
+                            Max
+                          </p>
+                          <div class="form-outline">
+                            <input type="number" id="typeNumber" name="max" class="form-control" />
+                            <label class="form-label" for="typeNumber">max</label>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-white w-100 border border-secondary">apply</button>
+                    </div>
+                </form>
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+          </div>
+          <!-- sidebar -->
+          <!-- content -->
+          <div class="col-lg-9">
+            <br><br>
+
+            <div class="row">
+              <% for(let i=0; i<products.length; i++){ %>
+            
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card h-100 position-relative" onclick="userdetails('<%=products[i]._id%>')">
+                    <% if(products[i].discount > 0) { %>
+                      <div class="discount-badge position-absolute top-0 start-0 mt-2   px-2 py-1" style="background-color: #febd69; color: #131921; border-radius: 90px;margin-left: 8px; font-weight: bolder;font-size:x-small;">
+                        <%= Math.floor(((products[i].discount-products[i].price)/products[i].discount)*100) %>% OFF
+                      </div>
+                    <% } %>
+                    <img style="height: 300px;" src="/primg/<%= products[i].image[0] %>" class="card-img-top" alt="<%= products[i].productName %>">
+                    <div class="card-body">
+                      <p class="card-text mb-2" style="color:#bf4800;font-family: 'Rubik', sans-serif;    font-weight: 400;
+                      font-size: 16px;
+                      letter-spacing: .3px;
+                      line-height: 20px;">
+                        <%= products[i].productName %>
+                      </p>
+                      <h5 class="card-title mb-3" style="color: #1c1b1b; font-family: 'Rubik', sans-serif;font-size: 18px;    font-weight: 800;">
+                        <%= products[i].pname %>
+                      </h5>
+                      <p class="card-text" style="color: #e02b40;">
+                        <% if(products[i].discount > 0) { %>
+                          <span class="original-price" style="color: #131921; text-decoration: line-through;">₹<%= products[i].discount%></span>
+                        <% } %>
+                        ₹<%= products[i].price %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+            
+            
+            
+
+            <hr />
+          </div>
+
+      
+              <!-- Pagination -->
+              <!-- Pagination -->
+
+              <% var total=total %>
+              <% var limit=limit %>
+              <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+                <ul class="pagination">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  
+                  <% for(let i=0;i<3;i++){ %>
+                    <li class="page-item active"><a class="page-link" href="/products?page=<%=i+1  %>">
+                        <%= i+1 %>
+                      </a></li>
+                    <% } %>
+
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                </ul>
+              </nav>
+              <!-- Pagination -->
+
+              <!-- Pagination -->
+        </div>
+      </div>
+      </div>
+    </section>
+    <!-- sidebar + content -->
+    <script>
+      function userdetails(id) {
+        const productDetailURL = `/product-details?productId=${id}`;
+
+        // Redirect to the user details page.
+        window.location.href = productDetailURL;
+      }
+
+    </script>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <!-- Footer -->
+</body>
+
+</html>

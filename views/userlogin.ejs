@@ -1,0 +1,269 @@
+
+
+<% if(status!=true||user[0].block=="true"){%>
+  
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background: radial-gradient(#fff, #ffd6d6);
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
+        }
+
+        .btn-signin {
+            background-color: #232F3E;
+            color: aliceblue;
+            box-shadow: none;
+            border-radius: 40px;
+            height: 40px;
+        }
+
+        .forget-password {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="vh-100">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card p-5">
+                            <h2 class="text-uppercase text-center mb-5 font-weight-bold text-dark">Sign In</h2>
+
+                            <form action="/api/login" method="POST">
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg"
+                                        name="email" style="background-color: #d9d9d99d;" />
+                                    <label class="form-label" for="form3Example3cg">Your Email</label>
+                                </div>
+                                <%if(blocked=="true"){%>
+                                  <p style="color: red;">User blocked</p>
+                                <%}%>
+                                <%if(nouser=="true"){%>
+                                  <p style="color: red;">invalied email or password</p>
+                                <%}%>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg"
+                                        name="password" style="background-color: #d9d9d99d;" />
+                                    <label class="form-label" for="form3Example4cdg">Password</label>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-signin btn-block">Sign In</button>
+                                </div>
+
+                                <p class="forget-password"><a href="/forgot-password">Forget Password?</a></p>
+
+                                <p class="text-center text-muted mt-5 mb-0">Don't have an account? <a href="/register"
+                                        class="fw-bold text-body"><u>Register here</u></a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+</body>
+
+</html>
+
+<% }else{%>
+  <!-- include footer -->
+<%- include('include/_header.ejs') %>
+<!-- /include footer -->
+  <link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+rel="stylesheet"
+/>
+<title><%=user[0].name.toUpperCase() %> Account Details</title>
+
+<section style="background: radial-gradient(#fff,#ffd6d6); height: 123vh;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol style="font-weight: 500;" class="breadcrumb mb-0">
+              Wallet
+              <a href="/user-wallet"><i   class="fa-solid fa-wallet" style="color: #3E4144; font-size: 22px; margin-left: 6px;"></i></a>
+              
+
+            </ol>
+          </nav>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <h5 class="my-3"><%=user[0].name.toUpperCase() %></h5>
+              <p class="text-muted mb-1"><%=user[0].email %></p>
+              <br>
+              <div class="d-flex justify-content-center mb-2">
+                <% if(user[0].varify=="false"){%>
+                <a href="/otp?email=<%=user[0].email %>&&id=<%=user[0]._id %>"><button type="button" class="btn btn-primary">Verify</button></a>
+                <%}else{%>
+                  <p>
+                    <span style="color: green; font-size: 1.5em;">&#10003;</span>
+                    <span style="color: green;">Verified</span>
+                </p>
+                  <%}%>
+                  
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body text-center">
+
+              <a href="/address?id=<%=user[0]._id%>" style="background-color: #ffdce5; /* light pink color */
+                             border: 0px solid #fdfdfd; /* border color */
+                             color: #000000; /* text color */
+                             padding: 10px 20px; /* adjust padding as needed */
+                             text-decoration: none;
+                             display: inline-block;
+                             width: 200px;"
+   class="btn border-shadow update">
+    <p style="margin: 0; /* remove default margin */">ADD Address</p>
+</a>
+<hr>
+<a href="/userorders" style="background-color: #ffdce5; /* light pink color */
+  border: 0px solid #ffffff; /* border color */
+  color: #000000; /* text color */
+  padding: 10px 20px; /* adjust padding as needed */
+  text-decoration: none;
+  display: inline-block;width: 200px;"
+class="btn border-shadow update">
+<p style="margin: 0; /* remove default margin */">Orders</p>
+</a>
+<hr>
+<a href="/address?id=<%=user[0]._id%>" style="background-color: #ffdce5; /* light pink color */
+  border: 0px solid #ffffff; /* border color */
+  color: #000000; /* text color */
+  padding: 10px 20px; /* adjust padding as needed */
+  text-decoration: none;
+  display: inline-block;width: 200px;"
+class="btn border-shadow update">
+<p style="margin: 0; /* remove default margin */">Update details</p>
+</a>
+<div style="height: 26px;"></div>
+
+
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+        
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4" style="height: 500px;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%=user[0].name %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%=user[0].email %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%=user[0].phone %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Mobile</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%=user[0].phone %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9" style="height: 200px;overflow: scroll;">
+                  <%for(i=0;i<user[0].address.length;i++){%>
+                  <p class="text-muted mb-0">City :<%=user[0].address[i].city %><br>State :<%=user[0].address[i].state %><br>Phone 1 :<%=user[0].address[i].line1 %><br>Phone 2:<%=user[0].address[i].line2 %><br>PIN :<%=user[0].address[i].pin %></p>
+                  <td><a href="javascript:void(0);"  class="btn btn-light border px-2 pt-2 icon-hover" onclick="if(confirmDelete('<%=i%>','<%=user[0]._id%>')) window.location.href = '/api/deleteaddress?index=<%=i%>&id=<%=user[0]._id%>';"><i class="fas fa-trash fa-lg text-secondary px-1"></i></a></td>
+                  <hr>
+                 <%}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <a href="/logout?email=<%=user[0].email %>">
+    <div class="d-flex justify-content-center">
+      <button type="submit"
+        class="btn btn-success btn-block " style="background-color: #232F3E; color: aliceblue; box-shadow: none; width: min-content; border-radius: 40px; height: 40px;" >LogOut</button>
+    </div>
+  </a>    
+      
+
+    </div>
+  </section>
+  <% }%>
+
+<script>
+function confirmDelete(index,id) {
+		if (confirm("Are you sure you want to delete this product?")) {
+			// If the user clicks 'OK', proceed with the deletion
+			window.location.href = `/api/deleteaddress?id=${id}&index=${index}`;
+		}else{
+
+		}
+	}
+</script>
+  
