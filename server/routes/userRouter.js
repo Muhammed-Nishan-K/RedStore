@@ -43,6 +43,7 @@ router.get('/contactus',userServices.contactus)// add user to another collction
 router.get('/order-sucess',userauth.orderauth,userServices.ordersuccess)// add user to another collction
 router.post('/submit-order',userServices.submitorder)// add user to another collction
 router.post('/deposit',userServices.deposit)// add user to another collction
+router.get('/err',userServices.err)// add user to another collction
 
 
 

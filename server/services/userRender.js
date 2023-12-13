@@ -39,16 +39,22 @@ exports.userHome = (req,res)=>{
                     }
                     
                 }
+            }).catch((err)=>{
+                res.redirect('/err');
             })
             
             
+        }).catch((err)=>{
+            res.render('/err');
         })
+    }).catch((err)=>{
+        res.render('/err');
     })
     
     
  })
  .catch(err=>{
-     res.send(err);
+     res.render('/err');
  })
     
 }
@@ -407,4 +413,8 @@ exports.blogs=(req,res)=>{
 
 exports.contactus=(req,res)=>{
     res.render('contactus')
+}
+
+exports.err=(req,res)=>{
+    res.render('errorpage');
 }
