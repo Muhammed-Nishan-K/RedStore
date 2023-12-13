@@ -400,3 +400,11 @@ exports.addtowallet=(req,res)=>{
 exports.addreview=(req,res)=>{
     res.render('review',{id:req.query.id});
 }
+
+exports.blogs=(req,res)=>{
+    res.render('blogpage')
+}
+
+exports.contactus=(req,res)=>{
+    res.render('contactus')
+}

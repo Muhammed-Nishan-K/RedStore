@@ -146,10 +146,10 @@ rel="stylesheet"
               <a class="nav-link text-white" href="/ourstore?category=all&search=<%= searchQuery %>">OUR STORE</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">BLOGS</a>
+              <a class="nav-link text-white" href="/blogs">BLOGS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">CONTACT</a>
+              <a class="nav-link text-white" href="/contactus">CONTACT</a>
             </li>
 
           </ul>
@@ -254,12 +254,17 @@ rel="stylesheet"
     <p>
       Trendy Products, Factory Prices, Excellent Service
     </p>
-    <button type="button" class="btn btn-outline-light">
-      Learn more
-    </button>
-    <button type="button" class="btn btn-light shadow-0 text-primary pt-2 border border-white">
-      <span class="pt-1">Purchase now</span>
-    </button>
+    <a href="/contactus">
+      <button type="button" class="btn btn-outline-dark" style=" color: black;">
+        Learn more
+      </button>
+    </a>
+    
+    <a href="/ourstore?category=all&search=<%= searchQuery %>">
+      <button type="button" class="btn btn-dark shadow-0 text-primary pt-2 border border-white">
+        <span class="pt-1" style=" color: rgb(255, 255, 255);">Purchase now</span>
+      </button>
+    </a>
   </div>
 </div>
 <div class="container my-5">
@@ -323,12 +328,18 @@ rel="stylesheet"
     <p>
       Trendy Products, Factory Prices, Excellent Service
     </p>
-    <button type="button" class="btn btn-outline-dark" style=" color: black;">
-      Learn more
-    </button>
-    <button type="button" class="btn btn-dark shadow-0 text-primary pt-2 border border-white">
-      <span class="pt-1" style=" color: rgb(255, 255, 255);">Purchase now</span>
-    </button>
+    <a href="/contactus">
+      <button type="button" class="btn btn-outline-dark" style=" color: black;">
+        Learn more
+      </button>
+    </a>
+    
+    <a href="/ourstore?category=all&search=<%= searchQuery %>">
+      <button type="button" class="btn btn-dark shadow-0 text-primary pt-2 border border-white">
+        <span class="pt-1" style=" color: rgb(255, 255, 255);">Purchase now</span>
+      </button>
+    </a>
+    
   </div>
 </div>
 <section>

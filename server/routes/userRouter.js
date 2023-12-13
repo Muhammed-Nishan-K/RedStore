@@ -22,7 +22,6 @@ router.get('/register',userServices.register) //home
 router.get('/product-details',userServices.productdetalis)// add user to another collction
 router.get('/cartpage',userauth.userauthMiddleware,userServices.cartshow)// add user to another collction
 router.post('/checkout',userauth.userauthMiddleware,userServices.checkout)// add user to another collction
-// router.get('/checkout',userauth.userauthMiddleware,userServices.checkout)// add user to another collction
 router.post('/payment',userauth.orderauth,userServices.payment)// add user to another collction
 router.get('/payment',userauth.orderauth,userServices.payment1)// add user to another collction
 router.get('/wishlist',userauth.userauthMiddleware,userServices.listshow)// add user to another collction
@@ -39,6 +38,8 @@ router.get('/orderdetails',userServices.orderdetail)// add user to another collc
 router.get('/user-wallet',userServices.userwallet)// add user to another collction
 router.get('/addreview',userServices.addreview)// add user to another collction
 router.get('/addtowallet',userServices.addtowallet)// add user to another collction
+router.get('/blogs',userServices.blogs)// add user to another collction
+router.get('/contactus',userServices.contactus)// add user to another collction
 router.get('/order-sucess',userauth.orderauth,userServices.ordersuccess)// add user to another collction
 router.post('/submit-order',userServices.submitorder)// add user to another collction
 router.post('/deposit',userServices.deposit)// add user to another collction
