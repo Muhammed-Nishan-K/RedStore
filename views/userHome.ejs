@@ -25,11 +25,21 @@ rel="stylesheet"
   width: 100%;
   height: 500px;
 }
+.logo-1{
+  width: 29%;
+}
 @media screen and (max-width: 480px) {
   .bannerimg{
   width: 100%;
   height: 200px;
 }
+}
+@media screen and (max-width: 986px) {
+  .logo-1{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 </head>
@@ -41,7 +51,7 @@ rel="stylesheet"
       <div class="container">
         <div class="row gy-3">
           <!-- Left elements -->
-          <div class="col-lg-2 col-sm-4 col-4">
+          <div class="logo-1">
             <a href="/"  class="float-start">
               <img src="images\logo-white.png" height="35" />
             </a>
@@ -61,7 +71,7 @@ rel="stylesheet"
           </form>
           </div>
           <!-- Center elements -->
-          <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="order-lg-last col-lg-5 col-sm-8 col-8 logo-1">
             <div class="d-flex float-end">
               
               <a href="/login" class="me-1  rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0"></p> </a>
@@ -235,23 +245,56 @@ rel="stylesheet"
   </div>
 </div>
 <div class="container my-5">
-  <div class="row row-cols-0 row-cols-md-2 g-4">
-    <div class="col">
-      <div  class="card">
-        <img src="images/istockphoto-1162734086-612x612.jpg" class="card-img-top" alt="..."style="height: 500px;">
-  
+
+  <div class="row">
+    <% for(var i = 4; i < product.length; i++) { %>
+      <%if(i==8){%>
+        <%break;%>
+      <%}%>
+      <div class="col-lg-3 col-md-6 col-sm-6 d-flex" onclick="userdetails('<%=product[i]._id%>')">
+
+        <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
+          <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
+            <img src="primg/<%=product[i].image[0]%>"
+              style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
+              class="card-img-top" />
+          </div>
+          <% var shortPname=product[i].productName.slice(0, 25); %>
+            <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
+            <div class="card-body d-flex flex-column">
+              <h6 class="card-text" style="font-size: 18px; margin-left: -8px;">
+                <%=shortPname %>..
+              </h6>
+              <p class="card-text" style="margin-left: -8px; opacity: .7; margin-bottom: 6px;">
+                <%=product[i].category %>
+              </p>
+              <h1>
+                <p class="card-text" style="margin-left: -8px; font-size: 25px;">₹<%=product[i].price %>
+                    <span
+                      style="font-size: 15px; text-decoration: line-through; font-weight: bolder; opacity: .7;">₹<%=product[i].discount %></span>
+                </p>
+              </h1>
+              <p class="card-text" style="opacity: .8;margin-left: -8px; margin-bottom: -18;">Free Delivery
+              </p>
+              <div
+                style="width: 100%;  display: flex; justify-content: end; height: aute; margin-bottom: -35; text-align: center;">
+                <p
+                  style="margin-top: -10px; cursor: pointer;  font-family: 'Itim', cursive; font-size: 20px; margin-right: -12px; font-weight: 700; ">
+                  M<span
+                    style="font-family: 'Jockey One', sans-serif; color: green; font-weight: 400; font-size: 15px;">Assured</span>
+                </p>
+              </div>
+            </div>
+        </div>
       </div>
-    </div>
-    <div class="col">
-      <div  class="card">
-        <img src="images/watch 2.jpg" class="card-img-top" alt="..."style="height: 500px;">
-  
+    <%if(i==3){%>
+      <%  break;%>
+      <%}%>
+    <% }%>
       </div>
-    </div>
-   
-    
-  </div>
 </div>
+
+
 <div class="bg-primary text-white py-5" style="background-image: url('images/attractive-enthusiastic-armenian-young-woman-curly-hair-pointing-looking-intrigued-left-show-index-fingers-awesome-blank-space-advertisement-smirking-joyfully-introducing-product-white-background.jpg');background-size: 100% 100%; background-repeat: no-repeat;height: 550px;">
     
   <div class="container py-5" style=" color: black;">
@@ -272,54 +315,16 @@ rel="stylesheet"
 </div>
 <section>
   <div class="container my-5">
-
-
-    <div class="row">
-      <% for(var i = 0; i < product.length; i++) { %>
-        <div class="col-lg-3 col-md-6 col-sm-6 d-flex" onclick="userdetails('<%=product[i]._id%>')">
-
-          <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
-            <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
-              <img src="primg/<%=product[i].image[0]%>"
-                style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
-                class="card-img-top" />
-            </div>
-            <% var shortPname=product[i].productName.slice(0, 25); %>
-              <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
-              <div class="card-body d-flex flex-column">
-                <h6 class="card-text" style="font-size: 18px; margin-left: -8px;">
-                  <%=shortPname %>..
-                </h6>
-                <p class="card-text" style="margin-left: -8px; opacity: .7; margin-bottom: 6px;">
-                  <%=product[i].category %>
-                </p>
-                <h1>
-                  <p class="card-text" style="margin-left: -8px; font-size: 25px;">₹<%=product[i].price %>
-                      <span
-                        style="font-size: 15px; text-decoration: line-through; font-weight: bolder; opacity: .7;">₹<%=product[i].discount %></span>
-                  </p>
-                </h1>
-                <p class="card-text" style="opacity: .8;margin-left: -8px; margin-bottom: -18;">Free Delivery
-                </p>
-                <div
-                  style="width: 100%;  display: flex; justify-content: end; height: aute; margin-bottom: -35; text-align: center;">
-                  <p
-                    style="margin-top: -10px; cursor: pointer;  font-family: 'Itim', cursive; font-size: 20px; margin-right: -12px; font-weight: 700; ">
-                    M<span
-                      style="font-family: 'Jockey One', sans-serif; color: green; font-weight: 400; font-size: 15px;">Assured</span>
-                  </p>
-                </div>
-              </div>
-          </div>
-        </div>
-      <%if(i==3){%>
-        <%  break;%>
-        <%}%>
-      <% }%>
-        </div>
+    <div class="row row-cols-0 row-cols-md-2 g-4">
+      
+      <div style="width: 100%;" class="map">
+        <iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62879.451379623155!2d78.01945164863281!3d9.936811000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00cf43b2d73531%3A0x73c12e4c5d4633cd!2sRed%20Store!5e0!3m2!1sen!2sin!4v1702449052162!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      
+    </div>
   </div>
+  
 </section>
 
-<!-- include footer -->
+
 <%- include('include/_footer') %>
-<!-- /include footer -->
