@@ -14,14 +14,14 @@ const razorpayInstance = new Razorpay({
 
 
 exports.create=(req,res)=>{
-    const price=parseInt(req.query.price)
+    const price=req.session.price;
 
-    if(req.query.id!=""){
+    if(req.session.prid){
         const payment=req.query.payment;
         const index=req.query.index;
         Userdb.findOne({email:req.session.email}).then((data1)=>{ 
     
-            productdb.find({_id:req.query.id}).then((data)=>{
+            productdb.find({_id:req.session.prid}).then((data)=>{
                 console.log(data);
                 const currentDate = new Date();
                 const neworder = new orderdb({
@@ -36,7 +36,7 @@ exports.create=(req,res)=>{
                  
                 });
                 neworder.save()
-                productdb.updateOne({_id:req.query.id},{$inc:{quantity:-1}}).then((data)=>{
+                productdb.updateOne({_id:req.session.prid},{$inc:{quantity:-1}}).then((data)=>{
 
                 })
                 if(req.query.payment=='wallet'){

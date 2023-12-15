@@ -18,7 +18,7 @@ exports.userHome = (req,res)=>{
  axios.get(`http://localhost:3001/api/showproductuser`)
   .then(function(response){
     const a=response.data
-    catdb.find({}).then((data1)=>{
+    catdb.find({deleted:false}).then((data1)=>{
         const category=data1;
         Userdb.find({email:req.session.email}).then((data)=>{
             bannerdb.find({}).then((banner)=>{
@@ -59,20 +59,22 @@ exports.userHome = (req,res)=>{
     
 }
 exports.address=(req,res)=>{
-    res.render('address',{id:req.query.id})
+    res.render('address')
 }
-exports.login=(req,res)=>{
+exports.login=async(req,res)=>{
     const isauth=req.session.isauth;
-    const blocked=req.query.blocked;
-    const nouser=req.query.nouser;
+    const blocked=req.session.blocked;
+    const nouser=req.session.nouser;
+    req.session.status='true'
+    const category= await catdb.find({deleted:false})
     
     axios.get(`http://localhost:3001/api/user?email=${req.session.email}`)
   .then(function(response){
-    console.log(response.data);
-     res.render('userlogin.ejs',{status:isauth,user:response.data,blocked:blocked,nouser:nouser})
+    
+     res.render('userlogin.ejs',{status:isauth,user:response.data,blocked:blocked,nouser:nouser,category:category})
   })
   .catch(err=>{
-      res.send(err);
+      res.render('errorpage');
   })
     // console.log("last");
     // console.log(req.query.user)
@@ -80,20 +82,23 @@ exports.login=(req,res)=>{
 }
 
 exports.register=(req,res)=>{
-    res.render('userRegister')
+    const message=''
+    res.render('userRegister', {message:message})
 } 
 
 
 
 exports.productdetalis=(req,res)=>{
     const id=req.query.productId
+    req.session.prid=id
     console.log(id);
     productdb.findOne({_id:id})
     
     .then(data=>{
         const data1=data
+        req.session.sum=data1.discount;
+        req.session.discount=data1.discount-data1.price
         Userdb.find({email:req.session.email}).then((data)=>{
-            console.log(data.length);
             if(data.length==0){
                 res.render("singleproduct",{product:data1,varify:false})
             }else{
@@ -118,12 +123,13 @@ exports.productdetalis=(req,res)=>{
 }
 exports.logout=(req,res)=>{
     req.session.isauth=false;
-    axios.get(`http://localhost:3001/api/logout?email=${req.query.email}`).then()
+    axios.get(`http://localhost:3001/api/logout?email=${req.session.email}`).then()
     req.session.email='';
     res.redirect("/");
     
 }
-exports.cartshow=(req,res)=>{
+exports.cartshow=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
     axios.get(`http://localhost:3001/api/cartshow?email=${req.session.email}`)
   .then(function(response){
     const a=response.data
@@ -138,8 +144,10 @@ exports.cartshow=(req,res)=>{
         sum=sum+(b*c);
         discount=discount+(d*c)
     }
+    req.session.sum=discount;
+    req.session.discount=discount-sum;
     
-     res.render('cartpage',{cart:a,sum:sum,discount:discount})
+     res.render('cartpage',{cart:a,sum:sum,discount:discount,category:category})
     })
     
     
@@ -147,15 +155,15 @@ exports.cartshow=(req,res)=>{
     
   })
   .catch(err=>{
-      res.send(err);
+      res.redirect('/err')
   })
 }
-exports.listshow=(req,res)=>{
+exports.listshow=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
     axios.get(`http://localhost:3001/api/listshow?email=${req.session.email}`)
   .then(function(response){
     const a=response.data
     wishdb.find({deleted:true}).then((data)=>{
-        console.log(data+"this is a data");
     let sum=0;
     for(let i=0;i<a.length;i++){
         let b=parseInt(a[i].price)
@@ -163,7 +171,7 @@ exports.listshow=(req,res)=>{
     }
     
     
-     res.render('wishlist',{cart:a,sum:sum})
+     res.render('wishlist',{cart:a,sum:sum,category:category})
     })
     
     
@@ -175,47 +183,50 @@ exports.listshow=(req,res)=>{
   })
 }
 exports.otp=(req,res)=>{
-    const email=req.query.email;
-    const id=req.query.id;
+    const email=req.session.email;
     
-    res.render('otp',{email:email,id:id})
+    res.render('otp',{email:email})
 
 }
 exports.sendotp=(req,res)=>{
-    const id=req.query.id
-    const email=req.query.email;
-    otpcontroller.sendOtp(id,email,res)
-    res.render('sendotp',{email:email,id:id})
+
+    const email=req.session.email;
+    otpcontroller.sendOtp(email,res)
+    res.render('sendotp',{email:email})
 
 }
 exports.forgetsendotp=(req,res)=>{
-    const email=req.query.email;
+    const email=req.session.forgetemail;
     Userdb.find({email:email}).then((data)=>{
         const email=data[0].email;
-        const id=data[0]._id
-        otpcontroller.sendOtp(id,email,res)
-        res.render('forgetvarifyotp',{email:email,id:id,status:false})
+        otpcontroller.sendOtp(email,res)
+        res.render('forgetvarifyotp',{email:email,status:false})
+    }).catch((err)=>{
+        res.redirect('/err')
     })
     
     
 
 }
 exports.resendotp=(req,res)=>{
-    const id=req.query.id;
-    const email=req.query.email;
-    console.log(id+" "+email)
-    otpdb.deleteOne({email:email}).then()
-    otpcontroller.sendOtp(id,email,res)
-    res.render('sendotp',{email:email,id:id})
+    const email=req.session.forgetemail;
+    otpdb.deleteOne({email:email}).then().catch((err)=>{
+        res.redirect('/err')
+    })
+    otpcontroller.sendOtp(email,res)
+    res.render('sendotp',{email:email,status:false})
 
 }
 exports.forgetpass=(req,res)=>{
-    const status=req.query.status;
-    console.log(status);
+    
+    const status=req.session.status;
     res.render('forgetpass',{status:status})
 }
 exports.forgetotp=(req,res)=>{
-    const email=req.query.email;
+    otpdb.deleteMany({email:req.session.forgetemail}).then((data)=>{
+
+    })
+    const email=req.session.forgetemail
     res.render('forgetotp',{email:email})
 }
 
@@ -223,17 +234,20 @@ exports.checkout=(req,res)=>{
     req.session.order=true;
     const index=req.query.index??0
     const id=req.query.id??""
-    console.log(req.body.price);
-    console.log(req.body.discount);
+    console.log(req.session.sum);
+    console.log(req.session.discount);
+    req.session.price=req.session.sum-req.session.discount
+    const category=catdb.find({deleted:false})
     Userdb.findOne({email:req.session.email}).then((data)=>{
-        res.render('paymentpage',{user:data,index:index,price:req.body.price,discount:req.body.discount,id:id});
+        res.render('paymentpage',{user:data,index:index,price:req.session.sum,discount:req.session.discount,id:id,category:category});
     })
 }
 exports.payment=(req,res)=>{
     const coupon=req.query.coupon??0
     const id=req.query.id??""
+    const category=catdb.find({deleted:false})
     Userdb.findOne({email:req.session.email}).then((data)=>{
-        res.render('paymentpage1',{index:req.query.index,price:req.body.total,id:id,coupon:coupon,wallet:data.wallet,couponcode:'none'})
+        res.render('paymentpage1',{index:req.query.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:'none',category:category})
     })
 
    
@@ -325,7 +339,7 @@ const razorpayInstance = new Razorpay({
 });
 
 exports.submitorder = async (req, res) => {
-    const totalAmount = req.query.price;
+    const totalAmount = req.session.price;
     const randomOrderID = Math.floor(Math.random() * 1000000).toString();
     const options = {
         amount: totalAmount * 100,
@@ -393,26 +407,32 @@ exports.ordersuccess=(req,res)=>{
 }
 
 
-exports.userwallet=(req,res)=>{
+exports.userwallet=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
     Userdb.findOne({email:req.session.email}).then((data)=>{
-        res.render('user-wallet',{user:data})
+        res.render('user-wallet',{user:data,category:category})
+    }).catch((err)=>{
+        res.redirect('/err')
     })
     
 }
-exports.addtowallet=(req,res)=>{
-    res.render('addtowallet');
+exports.addtowallet=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
+    res.render('addtowallet',{category:category})
 }
 
 exports.addreview=(req,res)=>{
     res.render('review',{id:req.query.id});
 }
 
-exports.blogs=(req,res)=>{
-    res.render('blogpage')
+exports.blogs=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
+    res.render('blogpage',{category:category})
 }
 
-exports.contactus=(req,res)=>{
-    res.render('contactus')
+exports.contactus=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
+    res.render('contactus',{category:category})
 }
 
 exports.err=(req,res)=>{

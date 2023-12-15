@@ -40,7 +40,7 @@ exports.findusers = (req, res) => {
         res.send(user)
     })
     .catch(err=>{
-        res.status(500).send({message:err.message||"Error occured while retrieving User info"})
+        res.render('errorpage');
     })
 }
 

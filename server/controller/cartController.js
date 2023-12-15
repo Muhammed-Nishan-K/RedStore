@@ -100,10 +100,20 @@ exports.quantityUpdate=async(req,res)=>{
        const newQuantity=cartdata.quantity+delta
        const curruntStock=productdata.quantity
        
+       
 
        if(newQuantity >=1 && newQuantity<= curruntStock){
         await cartdb.updateOne({_id:prId},{$set:{quantity:newQuantity}})
         const cart=await cartdb.find({email:req.session.email})
+        let sum=0;
+          let discount=0;
+          for(i=0;i<cart.length;i++){
+            sum=sum+cart[i].price*cart[i].quantity
+            discount=discount+cart[i].discount*cart[i].quantity
+            
+          }
+          req.session.sum=discount;
+          req.session.discount=discount-sum
         res.json({success:true , messege:"newQuantity updated",newQuantity:newQuantity,productdata:productdata,cart:cart})
        }else{
         res.json({success:false, messege:"quantity must need 1 more"})

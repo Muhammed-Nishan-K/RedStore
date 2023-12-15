@@ -16,11 +16,11 @@ let transporter = nodemailer.createTransport({
     auth: {    
       user: process.env.EMAIL_ADDRESS,
       pass: process.env.APP_PASSWORD,
-    },
-    
+},
+  
   });
 
-exports.sendOtp=async(_id,email,res)=>{
+exports.sendOtp=async(email,res)=>{
     try{
         const otp=`${Math.floor(1000+Math.random()*9000)}`
         const mailoption={
@@ -49,7 +49,8 @@ exports.sendOtp=async(_id,email,res)=>{
        
     }
     catch(err){
-        console.log(err+" Try catch error")
+            console.log(err);
+
     }
 }
 
@@ -59,26 +60,28 @@ exports.compare=(req,res)=>{
     const c=req.query.c;
     const d=req.query.d;
     let sum=a+b+c+d;
-    console.log(sum);
-    const email=req.query.email;
-    console.log(email);
+    const email=req.session.forgetemail;
+
     otpdb.find({email:email}).then((data)=>{
-        console.log(data);
+
         if(data){
             if(sum==data[0].otp){
-                userdb.updateOne({email:data[0].email},{varify:"true"}).then()
-                process.env.email=data[0].email;
+                userdb.updateOne({email:data[0].email},{$set:{varify:"true"}}).then().catch((err)=>{
+                    res.redirect('/err')
+                })
             res.redirect("/")
-            otpdb.deleteOne({email:email}).then()
+            otpdb.deleteOne({email:email}).then().catch((data)=>{
+                res.redirect('/err')
+            })
             }
             else{
-                console.log("err")
+                
             }
             
             
         }
         else{
-            console.log("err")
+           res.redirect('/err')
         }
     })
 }
@@ -89,11 +92,10 @@ exports.forgetcompare=(req,res)=>{
     const d=req.body.d;
     let sum=a+b+c+d;
 
-    const email=req.query.email;
-    const id=req.query.id;
+    const email=req.session.forgetemail;
+
 
     otpdb.find({email:email}).then((data)=>{
-        console.log(data);
         if(data){
             if(sum==data[0].otp){
                 
@@ -107,7 +109,9 @@ exports.forgetcompare=(req,res)=>{
             
         }
         else{
-            console.log("err")
+            res.render('sendotp',{email:email,status:true})
         }
+    }).catch(()=>{
+        res.render('errorpage');
     })
 }

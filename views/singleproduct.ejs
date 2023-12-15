@@ -21,6 +21,22 @@ rel="stylesheet"
 />
 <link rel="stylesheet" href="css/style.css">
 <style>
+  .review-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .review-item {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .rating span {
+    color: gold;
+    font-size: 24px;
+  }
   #img-container{
 	z-index: 1;
 	max-width: 500px;
@@ -48,6 +64,20 @@ rel="stylesheet"
 	border: 0px solid black;
 
 }
+.a-2{
+  display: none;
+}
+.a-1{
+  display: block;
+}
+@media screen and (max-width: 600px) {
+  .a-2{
+  display: block;
+}
+.a-1{
+  display: none;
+}
+}
 </style>
 </head>
 <body style="background: radial-gradient(#fff,#ffd6d6);">
@@ -60,7 +90,7 @@ rel="stylesheet"
           <!-- Left elements -->
           <div class="col-lg-2 col-sm-4 col-4">
             <a href="/"  class="float-start">
-              <img src="images\logo-white.png" height="35" />
+              <img src="/primg/logo.png" height="35" />
             </a>
           </div>
           <!-- Left elements -->
@@ -126,9 +156,13 @@ rel="stylesheet"
           <div class="row gx-5">
             <aside class="col-lg-6">
               <div class=" rounded-4 mb-3 d-flex justify-content-center">
-                <div  id="img-container">
+                <div class="a-1" id="img-container">
                   <div id="lens"></div>
-                  <img style="height: 400px;" id=featured src="primg/<%=product.image[0]%>">
+                  <img   id=featured src="primg/<%=product.image[0]%>">
+                </div>
+                <div class="a-2" id="img-container">
+                  <div id="lens"></div>
+                  <img   id=featured1 src="primg/<%=product.image[0]%>">
                 </div>
                 
 
@@ -303,30 +337,20 @@ rel="stylesheet"
                     mollit anim id est laborum.
                   </div>
                   <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
-                    <table style="width: 100%;">
-                      <thead>
-                          <tr>
-                              <th style="width: 33%;">Email</th>
-                              <th style="width: 18%;">Rating</th>
-                              <th>Feedback</th>
-
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <% for(let i=0;i<product.reviews.length;i++){ %>
-                          <tr>
-                              <td><%= product.reviews[i].email %></td>
-                              <td class="rating"><% for(let j=0;j<product.reviews[i].rating;j++){ %>
-                                <span style="color: gold; font-size: 24px;">&#9733;</span>
-                                <% } %>
-                              </td>
-                              <td class="detailed-review"><%= product.reviews[i].review %></td>
-                          </tr>
-                          <% } %>
-                  
-                          <!-- Add more rows for additional reviews -->
-                      </tbody>
-                  </table>
+                    <ul class="review-list">
+                      <% for(let i=0;i<product.reviews.length;i++){ %>
+                        <li class="review-item">
+                          <strong>Email:</strong> <%= product.reviews[i].email %><br>
+                          <strong>Rating:</strong>
+                          <span class="rating">
+                            <% for(let j=0;j<product.reviews[i].rating;j++){ %>
+                              <span style="color: gold; font-size: 24px;">&#9733;</span>
+                            <% } %>
+                          </span><br>
+                          <strong>Feedback:</strong> <%= product.reviews[i].review %>
+                        </li>
+                      <% } %>
+                    </ul>
                   </div>
                 </div>
                 <!-- Pills content -->
@@ -541,7 +565,9 @@ rel="stylesheet"
  <script>
   function imgChange(path){
     const content=document.getElementById("featured")
+    const content1=document.getElementById("featured1")
     content.src=path;
+    content1.src=path;
   }
   document.getElementById('img-container').addEventListener('mouseover', function(){
 imageZoom('featured')

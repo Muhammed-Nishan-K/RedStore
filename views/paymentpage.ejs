@@ -141,8 +141,6 @@
                                     <%=user.address[i].line1%>,
                                       <%=user.address[i].pin%> &nbsp;&nbsp;
                                         <form action="/checkout?index=<%=i%>" method="post">
-                                                      <input style="display: none;" type="number" value="<%=price%>" name="price">
-                                                      <input style="display: none;" type="number" value="<%=discount%>" name="discount">
                                         
                                                       <div class="mt-3">
                                                           <button type="submit" class="btn btn-success shadow-0 w-100 border">Select</button>
@@ -171,8 +169,7 @@
                   <div class="float-end d-flex">
 
                     <a href=""><button class="btn btn-light border">Cancel</button></a>
-                    <form action="/payment?index=<%=index%>&id=<%=id%>" method="post">
-                      <input style="display: none;" type="number" name="total" value="<%=price-discount%>">
+                    <form action="/payment?index=<%=index%>" method="post">
                       <button type="submit" class="btn btn-success shadow-0 border">Continue</button>
                     </form>
                     

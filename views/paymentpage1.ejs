@@ -78,7 +78,7 @@ padding: 1.5rem 1.5rem;
           </span>
         </h2>
         <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
-          <a href="/api/order?index=<%=index%>&id=<%=id%>" data-toggle="modal" data-target="#orderSuccessModal">
+          <a href="/api/order?index=<%=index%>" data-toggle="modal" data-target="#orderSuccessModal">
             <button class="btn btn-primary w-100 mt-2">Place order</button>
           </a>
         </div>
@@ -127,7 +127,7 @@ padding: 1.5rem 1.5rem;
         </h2>
         <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
           <% if(price-cpn<=wallet){ %>
-          <a href="/api/order?index=<%=index%>&id=<%=id%>&payment=wallet&price=<%=price-cpn%>&couponcode=<%=couponcode %>">
+          <a href="/api/order?index=<%=index%>&payment=wallet&couponcode=<%=couponcode %>">
             <button class="btn btn-primary w-100 mt-2">Place order</button>
           </a>
           <% }else{ %>
@@ -209,7 +209,7 @@ padding: 1.5rem 1.5rem;
           <span>TOTAL</span> <strong class="text-dark">₹ <%=price-cpn%></strong>
         </div>
         <div class="input-group mt-3 mb-4">
-          <form action="/api/aplaycoupon?index=<%=index%>&id=<%=id%>&total=<%= price %>&couponcode=<%=couponcode %>" method="post">
+          <form action="/api/aplaycoupon?index=<%=index%>&couponcode=<%=couponcode %>" method="post">
             <input type="text" class="form-control border" name="cpn" placeholder="Promo code" />
           <button type="submit" class="btn btn-light text-primary border">Apply</button>
           </form>
@@ -236,7 +236,7 @@ padding: 1.5rem 1.5rem;
         Your order has been placed successfully. Thank you for shopping with us!
       </div>
         <div class="modal-footer">
-          <a href="/api/order?index=<%=index%>&id=<%=id%>&payment=COD&price=<%=price-cpn%>&couponcode=<%=couponcode %>" class="btn btn-primary">Close</a>
+          <a href="/api/order?index=<%=index%>&payment=COD&couponcode=<%=couponcode %>" class="btn btn-primary">Close</a>
         </div>
     </div>
   </div>
@@ -245,7 +245,7 @@ padding: 1.5rem 1.5rem;
   $("#checkout-form").submit((e) => {
     e.preventDefault();
     $.ajax({
-      url: `/submit-order?prId=${'<%=id%>'}&price=${'<%=price-cpn%>'}`,
+      url: `/submit-order?prId=${'<%=id%>'}`,
       method: 'post',
       data: $('#checkout-form').serialize(),
       success: (response) => {
@@ -267,7 +267,7 @@ padding: 1.5rem 1.5rem;
       "order_id": order.razorpay_order_id,
       "handler": function (response) {
         alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
-        window.location.href = '/api/order?index=<%=index%>&id=<%=id%>&payment=AOD&price=<%=price-cpn%>&couponcode=<%=couponcode %>';
+        window.location.href = '/api/order?index=<%=index%>&payment=AOD&couponcode=<%=couponcode %>';
         
       },
       "prefill": {

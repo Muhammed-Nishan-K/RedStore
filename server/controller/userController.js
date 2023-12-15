@@ -17,19 +17,19 @@ module.exports = {
 
     // password=confirmpassword
     if (req.body.password !== req.body.confirmPassword) {
-      return res.status(400).send({ message: "Password and Confirm Password do not match!" });
+      res.render('userRegister',{message:'Password doesnot match'})
     }
 
     // phone number checking
     const phoneNumber = req.body.Phone;
     if (!/^\d{10}$/.test(phoneNumber)) {
-      return res.status(400).send({ message: "Phone number must be 10 digits long!" });
+      res.render('userRegister',{message:'Phone number must be 10 digit'})
     }
 
     // email verification
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(req.body.email)) {
-      return res.status(400).send({ message: "Invalid email format!" });
+      res.render('userRegister',{message:'Enter the email in correct format'})
     }
 
     // new user
@@ -76,22 +76,25 @@ module.exports = {
           if (blockData.length === 0) {
             req.session.isauth = true;
             await Userdb.updateOne({ email: inputEmail }, { $set: { status: 'Active' } });
-            res.redirect(`/login?email=${inputEmail}`);
+            res.redirect(`/`);
           } else {
             console.log(blockData);
-            res.redirect(`/login?blocked=true`);
+            req.session.blocked="true"
+            res.redirect(`/login`);
           }
         } catch (err) {
           console.error(err);
-          res.redirect(`/login?nouser=true`);
+          req.session.nouser='true'
+          res.redirect(`/login`);
         }
       }
       else{
-        res.redirect(`/login?nouser=true`);
+        req.session.nouser='true'
+        res.redirect(`/login`);
       }
     } catch (err) {
-      console.error(err);
-      res.redirect(`/login?nouser=true`);
+      req.session.nouser='true'
+      res.redirect(`/login`);
     }
   },
 
@@ -104,51 +107,50 @@ module.exports = {
       pin: req.body.pin,
     };
 
-    Userdb.updateOne({ _id: req.query.id }, { $push: { address: address } })
+    Userdb.updateOne({ email: req.session.email }, { $push: { address: address } })
       .then(() => {
         res.redirect('/login');
       })
       .catch((err) => {
-        console.error(err);
-        res.status(500).send(err);
+        res.redirect('/err')
       });
   },
 
   deleteaddress: async (req, res) => {
-    console.log(req.query.id + 'it is id');
-    console.log(req.query.index + 'it is id');
+
     const index = parseInt(req.query.index);
-    console.log(index);
 
     try {
-      const userData = await Userdb.findOne({ _id: req.query.id })
+      const userData = await Userdb.findOne({ email: req.session.email })
 
       await Userdb.updateOne(
-        { _id: req.query.id },
+        { email: req.session.email },
         { $pull: { address: { $in: [userData.address[index]] } } }
       );
 
       res.redirect('/login');
     } catch (err) {
-      console.error(err);
-      res.status(500).send(err);
+      res.redirect('/err')
     }
   },
 
   forgetpass: async (req, res) => {
+    req.session.nouser='false'
     const email = req.body.email;
 
     try {
       const data = await Userdb.find({ email: email });
 
       if (data.length === 0) {
-        res.redirect('/forgot-password?status=false');
+        req.session.status='false'
+        res.redirect('/forgot-password');
       } else {
-        res.redirect(`/forgetotp?email=${email}`);
+        req.session.forgetemail=email;
+        req.session.status='true'
+        res.redirect(`/forgetotp`);
       }
     } catch (err) {
-      console.error(err);
-      res.status(500).send(err);
+      res.render('errorpage');
     }
   },
 
@@ -156,7 +158,7 @@ module.exports = {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     try {
-      await Userdb.updateOne({ email: req.query.email }, { $set: { password: hashedPassword } });
+      await Userdb.updateOne({ email: req.session.forgetemail }, { $set: { password: hashedPassword } });
       res.redirect('/login');
     } catch (err) {
       console.error(err);

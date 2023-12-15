@@ -26,40 +26,70 @@
     .wallet-balance {
       font-size: 24px;
     }
+    .hide-scrollbar {
+  /* Hide the default scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  /* Create a custom scrollbar for Webkit browsers (Chrome, Safari) */
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Style the custom scrollbar for Webkit browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
   </style>
 </head>
 <body>
   <div style="width: 100%; display: flex;justify-content: center;align-items: center; height: 600px;">
 
-<div style="padding: 100px;border-radius: 10px;" class="wallet-container bg-light">
+<div style="padding: 30px;border-radius: 10px; width: 50%;" class="wallet-container bg-light">
   <div class="wallet-header">
-    <h2>User Wallet</h2>
-    <span class="wallet-balance">₹<%= user.wallet %>.00</span>
+    <h2>Wallet</h2>
+    <br>
+    
   </div>
+  <span>Balance: </span>
+  <span class="wallet-balance">₹<%= user.wallet %>.00</span>
 
   <!-- Transaction History -->
   <h4>Transaction History</h4>
-  <div style="width: auto; height: 200px; overflow: scroll;">
-    <ul class="list-group">
-      <% for(let i=user.walletdetails.length-1;i>=0;i--){%>
-        <% if(user.walletdetails[i].mode=='deposit'){ %>
-      <li style="color: green;" class="list-group-item">+ ₹<%= user.walletdetails[i].amount %>.00 - <%= user.walletdetails[i].mode %> (<%= user.walletdetails[i].date %>) <%= user.walletdetails[i].time %> </li>
-      <% }else{ %>
-        
-      <li style="color: red;" class="list-group-item">- ₹<%= user.walletdetails[i].amount %>.00 - <%= user.walletdetails[i].mode %> (<%= user.walletdetails[i].date %>) <%= user.walletdetails[i].time %> </li>
-      
-        <% } %>
+<div style="height: 300px; overflow: scroll;" class="table-responsive hide-scrollbar">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Amount</th>
+        <th scope="col">Mode</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let i=user.walletdetails.length-1;i>=0;i--) { %>
+        <tr>
+          <td style="color: <%= user.walletdetails[i].mode=='deposit' ? 'green' : 'red' %>">
+            <%= user.walletdetails[i].mode=='deposit' ? '+ ₹' : '- ₹' %><%= user.walletdetails[i].amount %>.00
+          </td>
+          <td><%= user.walletdetails[i].mode %></td>
+          <td><%= user.walletdetails[i].date %></td>
+          <td><%= user.walletdetails[i].time %></td>
+        </tr>
       <% } %>
-  
-      <!-- Add more transaction history items as needed -->
-    </ul>
-  </div>
+    </tbody>
+  </table>
+</div>
   
 
   <!-- Deposit and Withdraw Buttons -->
-  <div class="mt-4">
-    <button class="btn btn-success" data-toggle="modal" data-target="#depositModal">Deposit</button>
-    <button class="btn btn-danger" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+  <div style="width: 100%;" class="mt-4">
+    <button style="width: 100%;" class="btn btn-success" data-toggle="modal" data-target="#depositModal">Deposit</button>
   </div>
 
   <!-- Deposit Modal -->
