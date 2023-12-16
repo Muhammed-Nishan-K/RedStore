@@ -22,6 +22,7 @@ rel="stylesheet"
 />
 <link rel="stylesheet" href="css/style.css">
 <style>
+  
   @keyframes slideIn {
     0% {
         transform: translateX(-100%);
@@ -75,18 +76,7 @@ rel="stylesheet"
     height: 450px;
   }
 }
-.card-img-top {
-    aspect-ratio: 1 / 1;
-    width: 190px;
-    height: 210px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease-in-out; /* Add a smooth transition effect */
-  }
 
-  .card-img-top:hover {
-    transform: scale(1.3); /* Scale the image by 10% on hover */
-  }
 </style>
 <style>
   .mb-4 {
@@ -107,7 +97,22 @@ rel="stylesheet"
           transform: translateX(0%);
       }
   }
+  .img-2{
+    display: none;
+  }
+  .img-2:hover {
+  transform: scale(1.2); /* Adjust the scale factor as needed */
+  transition: transform 0.3s ease;
+}
+  .img-1{
+    display: block;
+  }
+  .product:hover {
+  transform: scale(1.02) translateY(-5px); /* Adjust the scale factor and translateY value as needed */
+  transition: transform 0.3s ease;
+}
 </style>
+
 
 </head>
 <body style="background: radial-gradient(#fff,#ffd6d6);">
@@ -247,13 +252,16 @@ rel="stylesheet"
 
     <div class="row">
       <% for(var i = 0; i < product.length; i++) { %>
-        <div  class="col-lg-3 col-md-6 col-sm-6 d-flex3" onclick="userdetails('<%=product[i]._id%>')">
+        <div  class="col-lg-3 col-md-6 col-sm-6 d-flex3 product" onclick="userdetails('<%=product[i]._id%>')">
 
-          <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
+          <div  class="card w-100 my-2  border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
             <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
               <img src="primg/<%=product[i].image[0]%>"
                 style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
-                class="card-img-top" />
+                class="card-img-top img-1" />
+              <img  src="primg/<%=product[i].image[1]%>"
+                style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
+                class="card-img-top img-2" />
             </div>
             <% var shortPname=product[i].productName.slice(0, 25); %>
               <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
@@ -318,13 +326,16 @@ rel="stylesheet"
       <%if(i==8){%>
         <%break;%>
       <%}%>
-      <div class="col-lg-3 col-md-6 col-sm-6 d-flex" onclick="userdetails('<%=product[i]._id%>')">
+      <div class="col-lg-3 col-md-6 product col-sm-6 d-flex" onclick="userdetails('<%=product[i]._id%>')">
 
         <div class="card w-100 my-2 border-" style="box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);">
           <div style="border: 50px white; width: 100%; display: flex; justify-content: center;">
-            <img id="img-1" src="primg/<%=product[i].image[0]%>"
+            <img  src="primg/<%=product[i].image[0]%>"
               style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
-              class="card-img-top" />
+              class="card-img-top img-1" />
+            <img  src="primg/<%=product[i].image[1]%>"
+              style=" aspect-ratio: 1 / 1; width: 190px; margin-top:30px;margin-bottom: 15px; height: 210px;"
+              class="card-img-top img-2" />
           </div>
           <% var shortPname=product[i].productName.slice(0, 25); %>
             <p style="margin-left: 15px; margin-bottom: -18px; opacity: .5;">Sponsered</p>
@@ -412,6 +423,41 @@ rel="stylesheet"
 
     observer.observe(animatedDiv);
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+          var cards = document.querySelectorAll('.product');
+
+          cards.forEach(function (card) {
+            var mainImage = card.querySelector('.img-1');
+            var hoverImage = card.querySelector('.img-2');
+
+            card.addEventListener('mouseover', function () {
+              mainImage.style.display = 'none';
+              hoverImage.style.display = 'block';
+            });
+
+            card.addEventListener('mouseout', function () {
+              mainImage.style.display = 'block';
+              hoverImage.style.display = 'none';
+            });
+         });
+        });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(".product").hover(
+        function () {
+          $(this).find(".img-1").addClass("zoom");
+        },
+        function () {
+          $(this).find(".img-2").removeClass("zoom");
+        }
+      );
+    });
+    
+  </script>
+  
+  
 
 
 

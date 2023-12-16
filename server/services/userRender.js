@@ -298,11 +298,12 @@ exports.filter=(req,res)=>{
     
 
 }
-exports.userorders=(req,res)=>{
+exports.userorders=async(req,res)=>{
+    const category=await catdb.find({deleted:false})
     axios.get(`http://localhost:3001/api/userorder?email=${req.session.email}`)
     .then(function(response){
       console.log(response.data);
-      res.render('user-orders',{order:response.data})
+      res.render('user-orders',{order:response.data,category:category})
    })
    .catch(err=>{
        res.send(err);
