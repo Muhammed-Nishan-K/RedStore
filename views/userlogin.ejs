@@ -633,6 +633,9 @@ rel="stylesheet"
 .hide-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
+.scroll::-webkit-scrollbar{
+  display: none;
+}
   @media screen and (max-width: 480px) {
   .cd-1{
     height: 575px;
@@ -761,7 +764,7 @@ class="btn border-shadow update">
                 <div class="col-sm-3">
                   <p class="mb-0">Address</p>
                 </div>
-                <div class="col-sm-9 hide-scrollbar" style="height: 200px;overflow: scroll;">
+                <div class="col-sm-9 hide-scrollbar scroll" style="height: 200px;overflow: scroll;">
                   <%for(i=0;i<user[0].address.length;i++){%>
                   <p class="text-muted mb-0">City :<%=user[0].address[i].city %><br>State :<%=user[0].address[i].state %><br>Phone 1 :<%=user[0].address[i].line1 %><br>Phone 2:<%=user[0].address[i].line2 %><br>PIN :<%=user[0].address[i].pin %></p>
                   <td><a href="javascript:void(0);"  class="btn btn-light border px-2 pt-2 icon-hover" onclick="if(confirmDelete('<%=i%>')) window.location.href = '/api/deleteaddress?index=<%=i%>';"><i class="fas fa-trash fa-lg text-secondary px-1"></i></a></td>

@@ -80,52 +80,74 @@
         <h2 class="mb-4">Add Product</h2>
 
         <!-- Form to add a new product -->
-        <form action="/api/addproduct" method="post" enctype="multipart/form-data">
+        <form id="addProductForm" action="/api/addproduct" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="productName">Product Name</label>
                 <input type="text" class="form-control" id="productName" name="productName" required>
+                <div class="invalid-feedback">Please enter a product name.</div>
             </div>
-
+        
             <div class="form-group">
                 <label for="category">Category</label>
-                <select class="form-control" id="category" name="category">
+                <select class="form-control" id="category" name="category" required>
+                    <option value="" disabled selected>Select a category</option>
                     <% for(var i = 0; i < cat.length; i++) { %>
                     <option value="<%=cat[i].catname%>"><%=cat[i].catname%></option>
                     <% } %>
-
                 </select>
+                <div class="invalid-feedback">Please select a category.</div>
             </div>
-
+        
             <div class="form-group">
                 <label for="description">Product Description</label>
                 <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                <div class="invalid-feedback">Please enter a product description.</div>
             </div>
-
+        
             <div class="form-group">
                 <label for="price">Actual Product Price (₹)</label>
                 <input type="number" class="form-control" id="price" name="price" step="0.01" min="0.01" required>
+                <div class="invalid-feedback">Please enter a valid product price.</div>
             </div>
-
+        
             <div class="form-group">
                 <label for="quantity">Quantity</label>
                 <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+                <div class="invalid-feedback">Please enter a valid quantity.</div>
             </div>
+        
             <div class="form-group">
-                <label for="quantity">price before Discount</label>
-                <input type="number" class="form-control" id="quantity" name="Discount" min="1" required>
+                <label for="Discount">Price before Discount</label>
+                <input type="number" class="form-control" id="Discount" name="Discount" min="1" required>
+                <div class="invalid-feedback">Please enter a valid price before discount.</div>
             </div>
-
+        
             <div class="form-group">
                 <label for="image">Product Image (Only .jpg, .jpeg, .png)</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="image" name="image" accept=".jpg, .jpeg, .png" required>
                     <label class="custom-file-label" for="image">Choose image</label>
+                    <div class="invalid-feedback">Please choose a valid image file (jpg, jpeg, png).</div>
                 </div>
             </div>
-
+        
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
+        
     </div>
+    <script>
+        // JavaScript for custom validation
+        document.getElementById('addProductForm').addEventListener('submit', function (event) {
+            var form = event.target;
+    
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+    
+            form.classList.add('was-validated');
+        });
+    </script>
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

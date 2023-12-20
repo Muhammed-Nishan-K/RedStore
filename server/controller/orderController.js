@@ -117,7 +117,23 @@ exports.userod=(req,res)=>{
 }
 
 exports.change=(req,res)=>{
-    orderdb.updateOne({_id:req.query.id},{status:req.body.exampleRadios}).then((data)=>{
+    orderdb.updateOne({_id:req.query.id},{status:req.body.exampleRadios}).then(async (data)=>{
+        if(req.body.exampleRadios=='Canceled'){
+            const price=await orderdb.findOne({_id:req.query.id})
+            const currentDate = new Date();
+            const wallet={
+                amount:price.price,
+                date: currentDate.toISOString().split('T')[0], // Format: YYYY-MM-DD
+                time: currentDate.toTimeString().split(' ')[0] ,
+                mode:"cancelorder"
+            }
+            await Userdb.updateOne({email:price.email},{$push:{walletdetails:wallet}})
+    Userdb.updateOne({email:price.email},{$inc:{wallet:price.price}}).then((data)=>{
+
+    }).catch(err=>{
+        res.redirect('/err')
+    })
+        }
         res.redirect("/admin-order")
     })
 }

@@ -56,6 +56,7 @@ router.post('/api/reset-password',userController.resetpass) //For creating new u
 router.post('/api/address',userController.addaddress) //For creating new user
 router.post('/api/forgot-password',userController.forgetpass) //For creating new user
 router.post('/api/aplaycoupon',coupon.aplaycoupon) //For creating new user
+router.get('/api/subfromwallet',coupon.sub) //For creating new user
 router.get('/api/deleteaddress',userController.deleteaddress) //For creating new user
 router.get('/api/addtowallet',orderController.userwallet) //For creating new user
 router.post('/api/login',userController.isUser) //For login the user
@@ -67,6 +68,7 @@ router.get("/api/user", adminController.findusers);
 router.get("/api/logout", adminController.logout);
 router.get("/api/addtocart",cartContoller.create);
 router.get("/api/wishlist",wishlist.create);
+router.get("/api/productdetails",addproduct.single);
 router.get("/api/removecart",cartContoller.delete);
 router.get("/api/removewish",wishlist.delete);
 router.get("/api/cartshow",cartContoller.find);

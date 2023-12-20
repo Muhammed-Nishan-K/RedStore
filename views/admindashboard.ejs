@@ -106,6 +106,10 @@
 
 			
 		</main>
+		<div>
+			<canvas id="myChart"></canvas>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
@@ -129,6 +133,34 @@
         // Additional custom scripts if needed
     });
 </script>
+<script>
+	const ctx = document.getElementById('myChart');
+	var data='<%=dataquantity %>'
+	 data=data.replace(/[,]/g, "");
+	 data=data.split('').map(value => Number(value))
+	
+	console.log(data,typeof data);
+  
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August', 'Sept', 'Oct', 'Nov', 'Dec'],
+		datasets: [{
+		  label: 'Sales',
+		  data: data,
+		  borderWidth: 1
+		}]
+	  },
+	  options: {
+		scales: {
+		  y: {
+			beginAtZero: true
+		  }
+		}
+	  }
+	});
+	
+  </script>
 	
 
 </body>

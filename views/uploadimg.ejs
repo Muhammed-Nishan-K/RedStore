@@ -20,16 +20,24 @@
         cursor: pointer;
     }
 
-    .custom-file-label::after {
-        content: "Browse";
-    }
-
     .form-group {
         margin-bottom: 20px;
     }
 
     label {
         font-weight: bold;
+    }
+
+    .custom-file-input.is-invalid ~ .custom-file-label::after {
+        content: "Choose image";
+    }
+
+    .custom-file-input.is-invalid:focus ~ .custom-file-label::after {
+        content: "Choose image";
+    }
+
+    .invalid-feedback {
+        display: block;
     }
 </style>
 
@@ -40,16 +48,17 @@
         <h2 class="mb-4">Add Image</h2>
 
         <!-- Form to add an image -->
-        <form action="/api/img?id=<%= id %>" method="post" enctype="multipart/form-data">
+        <form id="imageForm" action="/api/img?id=<%= id %>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="image">Image</label>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image" name="image">
-                    <label class="custom-file-label" for="image">Choose file</label>
+                    <input type="file" class="custom-file-input" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+                    <label class="custom-file-label" for="image">Choose image (jpg, jpeg, png only)</label>
+                    <div class="invalid-feedback">Please choose a valid image file (jpg, jpeg, png).</div>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Add Image</button>
+        
+            <button type="button" id="submitBtn" class="btn btn-primary">Add Image</button>
         </form>
     </div>
     <section>
@@ -79,6 +88,31 @@
 
     <!-- MAIN -->
 </section>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', function () {
+        var fileInput = document.getElementById('image');
+        var form = document.getElementById('imageForm');
+
+        if (fileInput.files.length === 0) {
+            // If no file is selected, show validation message
+            fileInput.classList.add('is-invalid');
+        } else {
+            // Check if the selected file has a valid extension
+            var validExtensions = ['.jpg', '.jpeg', '.png'];
+            var isValidExtension = validExtensions.some(function(ext) {
+                return fileInput.value.toLowerCase().endsWith(ext);
+            });
+
+            if (!isValidExtension) {
+                fileInput.classList.add('is-invalid');
+            } else {
+                // If a valid file is selected, remove validation message and submit the form
+                fileInput.classList.remove('is-invalid');
+                form.submit();
+            }
+        }
+    });
+</script>
 <!-- CONTENT -->
 </body>
 </html>

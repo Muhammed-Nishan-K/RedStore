@@ -111,6 +111,8 @@ exports.productdetalis=(req,res)=>{
                 
             }
             
+        }).catch((err)=>{
+            res.redirect(('/err'))
         })
         // if(varify=="true"){
         //     res.render("singleproduct",{product:data,varify:true})
@@ -121,9 +123,12 @@ exports.productdetalis=(req,res)=>{
     })
     
 }
+
 exports.logout=(req,res)=>{
     req.session.isauth=false;
-    axios.get(`http://localhost:3001/api/logout?email=${req.session.email}`).then()
+    axios.get(`http://localhost:3001/api/logout?email=${req.session.email}`).then().catch((err)=>{
+        res.redirect(('/err'))
+    })
     req.session.email='';
     res.redirect("/");
     
@@ -148,6 +153,8 @@ exports.cartshow=async(req,res)=>{
     req.session.discount=discount-sum;
     
      res.render('cartpage',{cart:a,sum:sum,discount:discount,category:category})
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
     
     
@@ -172,6 +179,8 @@ exports.listshow=async(req,res)=>{
     
     
      res.render('wishlist',{cart:a,sum:sum,category:category})
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
     
     
@@ -179,17 +188,19 @@ exports.listshow=async(req,res)=>{
     
   })
   .catch(err=>{
-      console.log(err);
+     res.redirect('/err')
   })
 }
-exports.otp=(req,res)=>{
+exports.otp=async(req,res)=>{
+    const category=await catdb.find({deleted:true})
     const email=req.session.email;
+    await otpdb.deleteMany({email:email})
     
-    res.render('otp',{email:email})
+    res.render('otp',{email:email,category:category})
 
 }
-exports.sendotp=(req,res)=>{
-
+exports.sendotp=async(req,res)=>{
+    const category=await catdb.find({deleted:true})
     const email=req.session.email;
     otpcontroller.sendOtp(email,res)
     res.render('sendotp',{email:email})
@@ -212,6 +223,8 @@ exports.resendotp=(req,res)=>{
     const email=req.session.forgetemail;
     otpdb.deleteOne({email:email}).then().catch((err)=>{
         res.redirect('/err')
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
     otpcontroller.sendOtp(email,res)
     res.render('sendotp',{email:email,status:false})
@@ -225,6 +238,8 @@ exports.forgetpass=(req,res)=>{
 exports.forgetotp=(req,res)=>{
     otpdb.deleteMany({email:req.session.forgetemail}).then((data)=>{
 
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
     const email=req.session.forgetemail
     res.render('forgetotp',{email:email})
@@ -240,14 +255,22 @@ exports.checkout=(req,res)=>{
     const category=catdb.find({deleted:false})
     Userdb.findOne({email:req.session.email}).then((data)=>{
         res.render('paymentpage',{user:data,index:index,price:req.session.sum,discount:req.session.discount,id:id,category:category});
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
 }
 exports.payment=(req,res)=>{
     const coupon=req.query.coupon??0
     const id=req.query.id??""
-    const category=catdb.find({deleted:false})
+    const category=catdb.find({deleted:false}).then(data=>{
+
+    }).catch((err)=>{
+    res.redirect(('/err'))
+})
     Userdb.findOne({email:req.session.email}).then((data)=>{
         res.render('paymentpage1',{index:req.query.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:'none',category:category})
+    }).catch((err)=>{
+        res.redirect(('/err'))
     })
 
    
@@ -255,26 +278,33 @@ exports.payment=(req,res)=>{
 exports.payment1=(req,res)=>{
     const coupon=req.query.coupon??0
     const id=req.query.id??""
+    const category=catdb.find({deleted:false}).then(data=>{
+
+    }).catch((err)=>{
+    res.redirect(('/err'))
+})
     Userdb.findOne({email:req.session.email}).then((data)=>{
-   res.render('paymentpage1',{index:req.query.index,price:req.query.total,id:id,coupon:coupon,wallet:data.wallet,couponcode:req.query.couponcode})
+   res.render('paymentpage1',{index:req.query.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:req.query.couponcode,category:category})
+}).catch((err)=>{
+    res.redirect(('/err'))
 })
 }
 
-exports.ourstore=(req,res)=>{
+exports.ourstore=async(req,res)=>{
     const cat=req.query.category;
     const search=req.query.search
     axios.get(`http://localhost:3001/api/ourstore?category=${req.query.category}&search=${req.query.search}`)
     .then(function(response){
         const products=response.data;
         catdb.find({deleted:false}).then((data)=>{
-            console.log(data);
-            res.render('ourstore',{products:products,category:data,varify:req.session.varify,cat:cat})
+
+            res.render('ourstore',{products:products,category:data,varify:req.session.varify,cat:cat,searchQuery:req.query.search})
         })
       
        
     })
     .catch(err=>{
-        res.send(err);
+        res.redirect('/err')
     })
 }
 exports.filter=(req,res)=>{
@@ -285,7 +315,11 @@ exports.filter=(req,res)=>{
             const data=data2;
             catdb.find({deleted:false}).then((data1)=>{
                 res.render('ourstore',{products:data,category:data1,cat:req.query.cat})
+            }).catch((err)=>{
+                res.redirect(('/err'))
             })
+        }).catch((err)=>{
+            res.redirect(('/err'))
         })
     }else{
         productdb.find({price:{$lt:max,$gt:min},category:req.query.cat}).then((data2)=>{
@@ -293,6 +327,8 @@ exports.filter=(req,res)=>{
             catdb.find({deleted:false}).then((data1)=>{
                 res.render('ourstore',{products:data,category:data1,cat:req.query.cat})
             })
+        }).catch((err)=>{
+            res.redirect(('/err'))
         })
     }
     
@@ -302,32 +338,41 @@ exports.userorders=async(req,res)=>{
     const category=await catdb.find({deleted:false})
     axios.get(`http://localhost:3001/api/userorder?email=${req.session.email}`)
     .then(function(response){
-      console.log(response.data);
-      res.render('user-orders',{order:response.data,category:category})
+        res.render('user-orders',{order:response.data,category:category})
    })
    .catch(err=>{
        res.send(err);
    })
 
 }
-exports.cancelorder=(req,res)=>{
+exports.cancelorder=async(req,res)=>{
     orderdb.updateOne({_id:req.query.id},{$set:{status:'Canceled'}}).then((data)=>{
-        console.log(data);
+        
     })
-    axios.get(`http://localhost:3001/api/userorder?email=${req.session.email}`)
-    .then(function(response){
-      console.log(response.data);
-      res.render('user-orders',{order:response.data})
-   })
-   .catch(err=>{
-       res.send(err);
-   })
+    const amound=await orderdb.findOne({_id:req.query.id})
+    const currentDate = new Date();
+    const wallet={
+        amount:amound.price,
+        date: currentDate.toISOString().split('T')[0], // Format: YYYY-MM-DD
+        time: currentDate.toTimeString().split(' ')[0] ,
+        mode:"cancelorder"
+    }
+    await Userdb.updateOne({email:req.session.email},{$push:{walletdetails:wallet}})
+    Userdb.updateOne({email:req.session.email},{$inc:{wallet:amound.price}}).then((data)=>{
+
+    }).catch(err=>{
+        res.redirect('/err')
+    })
+    res.redirect('/userorders')
 }
 
-exports.orderdetail=(req,res)=>{
+exports.orderdetail=async(req,res)=>{
+    const category= await catdb.find({deleted:false})
     const index=parseInt(req.query.index)
     orderdb.findOne({_id:req.query.id}).then((data)=>{
-        res.render('orderdetail',{order:data,index:index})
+        res.render('orderdetail',{order:data,index:index,category:category})
+    }).catch(err=>{
+        res.redirect('/err')
     })
 }
 
@@ -418,7 +463,11 @@ exports.userwallet=async(req,res)=>{
     
 }
 exports.addtowallet=async(req,res)=>{
-    const category= await catdb.find({deleted:false})
+    const category= await catdb.find({deleted:false}).then((data)=>{
+
+    }).catch(err=>{
+        res.redirect('/err')
+    })
     res.render('addtowallet',{category:category})
 }
 
@@ -427,13 +476,24 @@ exports.addreview=(req,res)=>{
 }
 
 exports.blogs=async(req,res)=>{
-    const category= await catdb.find({deleted:false})
-    res.render('blogpage',{category:category})
+    try{
+        const category= await catdb.find({deleted:false})
+        res.render('blogpage',{category:category})
+    }catch{
+        res.redirect('/err')
+    }
+    
+    
 }
 
 exports.contactus=async(req,res)=>{
-    const category= await catdb.find({deleted:false})
-    res.render('contactus',{category:category})
+    try{
+        const category= await catdb.find({deleted:false})
+        res.render('contactus',{category:category})
+    }catch{
+        res.redirect('/err');
+    }
+    
 }
 
 exports.err=(req,res)=>{

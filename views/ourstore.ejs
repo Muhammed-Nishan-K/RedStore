@@ -54,7 +54,7 @@ rel="stylesheet"
           <!-- Left elements -->
           <div class="col-lg-2 col-sm-4 col-4">
             <a href="/"  class="float-start">
-              <img src="images\logo-white.png" height="35" />
+              <img src="/primg/logo.png" height="35" />
             </a>
           </div>
           <!-- Left elements -->
@@ -63,9 +63,9 @@ rel="stylesheet"
           <div class="order-lg-last col-lg-5 col-sm-8 col-8">
             <div class="d-flex float-end">
               
-              <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Account</p> </a>
-              <a href="/wishlist" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Wishlist</p> </a>
-              <a href="/cartpage" class="border rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">My cart</p> </a>
+              <a href="/login" class="me-1  rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0"></p> </a>
+              <a href="/wishlist" class="me-1  rounded py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0"></p> </a>
+              <a href="/cartpage" class="border  py-1 px-3 nav-link d-flex align-items-center"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0"></p> </a>
 
             </div>
           </div>
@@ -104,19 +104,11 @@ rel="stylesheet"
               </a>
               <!-- Dropdown menu -->
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item " style="color: white; background-color: #3E4144;" href="#">LAPTOP</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">SMARTPHONE</a>
-                </li>
-
-                <li>
-                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">HEADSET</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" style="color: white; background-color: #3E4144;" href="#">WATCHES</a>
-                </li>
+                <% for(let i=0;i<category.length;i++){%>
+                  <li>
+                    <a class="dropdown-item " style="color: white; background-color: #3E4144;" href="/ourstore?category=<%= category[i].catname %>&search="><%=category[i].catname%></a>
+                  </li>
+                  <%}%>
               </ul>
             </li>
 
@@ -124,13 +116,13 @@ rel="stylesheet"
               <a class="nav-link text-white" href="/">HOME</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="/ourstore">OUR STORE</a>
+              <a class="nav-link text-white" href="/ourstore?category=all&search=<%= searchQuery %>">OUR STORE</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">BLOGS</a>
+              <a class="nav-link text-white" href="/blogs">BLOGS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">CONTACT</a>
+              <a class="nav-link text-white" href="/contactus">CONTACT</a>
             </li>
 
           </ul>
@@ -178,117 +170,28 @@ rel="stylesheet"
                     aria-labelledby="headingOne">
                     <div class="accordion-body">
                       <ul class="list-unstyled">
-                        <li><a href="/ourstore?category=all" class="text-dark">All</a></li>
+                        <% if(cat=="all"){ %>
+                        <li style="background-color: #bfc7ce; border-radius: 10px; display: flex; justify-content: center;"><a href="/ourstore?category=all&search=" class="text-dark">All</a></li>
+                        <% }else{ %>
+                          <li style="border-radius: 10px; display: flex; justify-content: center;"><a href="/ourstore?category=all&search=" class="text-dark">All</a></li>
+                          <% } %>
                         <% for(let i=0;i<category.length;i++){ %>
-                          <li><a href="/ourstore?category=<%= category[i].catname %>&search=" class="text-dark">
+                          <% if(cat==category[i].catname){ %>
+                          <li style="background-color: #bfc7ce; border-radius: 10px; display: flex; justify-content: center;"><a href="/ourstore?category=<%= category[i].catname %>&search=" class="text-dark">
                               <%= category[i].catname %>
                             </a></li>
+                            <% }else{ %>
+                              <li style="border-radius: 10px; display: flex; justify-content: center;"><a href="/ourstore?category=<%= category[i].catname %>&search=" class="text-dark">
+                                <%= category[i].catname %>
+                              </a></li>
+                              <% } %>
                           <% } %>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button text-dark bg-light" type="button" data-mdb-toggle="collapse"
-                      data-mdb-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
-                      aria-controls="panelsStayOpen-collapseTwo">
-                      Brands
-                    </button>
-                  </h2>
-                  <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
-                    aria-labelledby="headingTwo">
-                    <div class="accordion-body">
-                      <div>
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
-                          <div class="accordion-body">
-                            <div>
-                              <!-- Checked checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" checked />
-                                <label class="form-check-label" for="flexCheckChecked1">Mercedes</label>
-                                <span class="badge badge-secondary float-end">120</span>
-                              </div>
-                              <!-- Checked checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked />
-                                <label class="form-check-label" for="flexCheckChecked2">Toyota</label>
-                                <span class="badge badge-secondary float-end">15</span>
-                              </div>
-                              <!-- Checked checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" checked />
-                                <label class="form-check-label" for="flexCheckChecked3">Mitsubishi</label>
-                                <span class="badge badge-secondary float-end">35</span>
-                              </div>
-                              <!-- Checked checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" checked />
-                                <label class="form-check-label" for="flexCheckChecked4">Nissan</label>
-                                <span class="badge badge-secondary float-end">89</span>
-                              </div>
-                              <!-- Default checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                <label class="form-check-label" for="flexCheckDefault">Honda</label>
-                                <span class="badge badge-secondary float-end">30</span>
-                              </div>
-                              <!-- Default checkbox -->
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                <label class="form-check-label" for="flexCheckDefault">Suzuki</label>
-                                <span class="badge badge-secondary float-end">30</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <script>
-                          document.addEventListener('DOMContentLoaded', function () {
-                            // Get all checkboxes
-                            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                        
-                            // Add event listener to each checkbox
-                            checkboxes.forEach(function (checkbox) {
-                              checkbox.addEventListener('change', updateUrl);
-                            });
-                        
-                            // Function to update the URL based on checked checkboxes
-                            function updateUrl() {
-                              const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
-                              const categories = checkedCheckboxes.map(checkbox => checkbox.value);
-                        
-                              // Build the new URL
-                              const currentUrl = new URL(window.location.href);
-                              
-                              // Replace the current Category parameter with the updated one
-                              currentUrl.searchParams.set('Category', categories.join(','));
-                        
-                              // Replace URL encoding with commas
-                              const updatedUrl = currentUrl.toString().replace(/%2C/g, ',');
-                        
-                              // Replace the current URL with the updated one
-                              window.history.replaceState({}, '', updatedUrl);
-                            }
-                          });
-                        </script>
-                        
-                        
-                            <!-- Checked checkbox -->
-
-                            <!-- Checked checkbox -->
-
-                            <!-- Checked checkbox -->
-
-                            <!-- Default checkbox -->
-
-                            <!-- Default checkbox -->
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
 
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="headingThree">
@@ -385,7 +288,7 @@ rel="stylesheet"
 
               <% var total=total %>
               <% var limit=limit %>
-              <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+              <!-- <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
                 <ul class="pagination">
                   <li class="page-item disabled">
                     <a class="page-link" href="#" aria-label="Previous">
@@ -405,7 +308,7 @@ rel="stylesheet"
                         </a>
                       </li>
                 </ul>
-              </nav>
+              </nav> -->
               <!-- Pagination -->
 
               <!-- Pagination -->

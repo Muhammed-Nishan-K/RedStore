@@ -73,13 +73,19 @@
     </thead>
     <tbody>
       <% for(let i=user.walletdetails.length-1;i>=0;i--) { %>
-        <tr>
-          <td style="color: <%= user.walletdetails[i].mode=='deposit' ? 'green' : 'red' %>">
-            <%= user.walletdetails[i].mode=='deposit' ? '+ ₹' : '- ₹' %><%= user.walletdetails[i].amount %>.00
+        <tr style="color: green;">
+          <% if(user.walletdetails[i].mode=='deposit'||user.walletdetails[i].mode=='cancelorder'){ %>
+          <td>
+            +<%= user.walletdetails[i].amount %>.00
           </td>
-          <td><%= user.walletdetails[i].mode %></td>
-          <td><%= user.walletdetails[i].date %></td>
-          <td><%= user.walletdetails[i].time %></td>
+        <% }else{ %>
+          <td style="color: red;">
+            -<%= user.walletdetails[i].amount %>.00
+          </td>
+          <% } %>
+          <td style="color: black;"><%= user.walletdetails[i].mode %></td>
+          <td style="color: black;"><%= user.walletdetails[i].date %></td>
+          <td style="color: black;"><%= user.walletdetails[i].time %></td>
         </tr>
       <% } %>
     </tbody>

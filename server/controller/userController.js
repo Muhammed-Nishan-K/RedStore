@@ -49,7 +49,8 @@ module.exports = {
 
     try {
       const data = await user.save();
-      res.redirect('/');
+      req.session.email=req.body.email;
+      res.redirect('/otp');
     } catch (err) {
       res.redirect('/register');
     }

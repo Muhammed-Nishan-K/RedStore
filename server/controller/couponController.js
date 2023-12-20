@@ -23,6 +23,10 @@ exports.aplaycoupon=(req,res)=>{
     coupondb.find({couponcode:couponCode,status:"active"}).then((data)=>{
         
         req.session.price=req.session.price-data[0].discount;
-        res.redirect(`/payment?coupon=${data[0].discount}&id=${req.query.id}&index=${req.query.index}&total=${req.query.total}&couponcode=${couponCode}`);
+        res.redirect(`/payment?coupon=${data[0].discount}&id=${req.query.id}&index=${req.query.index}&couponcode=${couponCode}`);
     })
+}
+exports.sub=(req,res)=>{
+
+    
 }

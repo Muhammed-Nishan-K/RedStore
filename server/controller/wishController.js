@@ -21,7 +21,6 @@ exports.create=(req,res)=>{
          
          
         });
-        console.log(wishdb);
         wishadb.find({email:req.session.email,productName:data.productName}).then((data)=>{
             if(data.length==0){
         wishdb.save().then((data)=>{

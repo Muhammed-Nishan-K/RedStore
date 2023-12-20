@@ -9,6 +9,7 @@ const coupondb = require('../model/couponSchema')
 const fs = require('fs'); // Use the promises version of fs for async/await
    const path = require('path');
    const PDFDocument = require('pdfkit');
+const { log } = require('console')
 
 exports.adminlogin=(req,res)=>{
     res.render('adminlogin')
@@ -19,18 +20,130 @@ exports.adminlogout=(req,res)=>{
 }
 
 exports.admindash=(req,res)=>{
+  console.log('gfdgfmhgf');
   Userdb.find({})
       .then(response=>{
         const userCount=response.length
-          orderdb.find({status:"pending"})
+          orderdb.find({status:"Delivered"})
           .then(data=>{
+            console.log(data);
+            let dataquantity=[];
+            for(m=1;m<13;m++){
+              
+            let quantity=0
+            for(i=0;i<data.length;i++){
+              let a=data[i].date.slice(5,7)
+              console.log(a);
+              let b;
+              if(m<=10){
+                 b='0'+m
+              }else{
+                 b=m
+              }
+              
+              console.log(b);
+              if(a==b){
+                for(j=0;j<data[i].productName.length;j++){
+                  quantity+=data[i].productName[j].quantity
+                }
+              }
+              
+              
+              
+            }
+            dataquantity.push(quantity);
+            }
+            
+            // let quantity2=0
+            // for(i=0;i<data.length;i++){
+            //   let a=data[i].date.slice(5,7)
+            //   console.log(a);
+            //   if(a=='02'){
+            //     for(j=0;j<data[i].productName.length;j++){
+            //       quantity+=data[i].productName[j].quantity
+            //     }
+            //   }
+              
+              
+              
+            // }
+            // dataquantity.push(quantity2);
+            // let quantity3=0
+            // for(i=0;i<data.length;i++){
+            //   let a=data[i].date.slice(5,7)
+            //   console.log(a);
+            //   if(a=='03'){
+            //     for(j=0;j<data[i].productName.length;j++){
+            //       quantity+=data[i].productName[j].quantity
+            //     }
+            //   }
+              
+              
+              
+            // }
+            // dataquantity.push(quantity3);
+            // let quantity4=0
+            // for(i=0;i<data.length;i++){
+            //   let a=data[i].date.slice(5,7)
+            //   console.log(a);
+            //   if(a=='04'){
+            //     for(j=0;j<data[i].productName.length;j++){
+            //       quantity+=data[i].productName[j].quantity
+            //     }
+            //   }
+              
+              
+              
+            // }
+            // dataquantity.push(quantity4);
+            // let quantity5=0
+            // for(i=0;i<data.length;i++){
+            //   let a=data[i].date.slice(5,7)
+            //   console.log(a);
+            //   if(a=='05'){
+            //     for(j=0;j<data[i].productName.length;j++){
+            //       quantity+=data[i].productName[j].quantity
+            //     }
+            //   }
+              
+              
+              
+            // }
+            // dataquantity.push(quantity5);
+            // let quantity6=0
+            // for(i=0;i<data.length;i++){
+            //   let a=data[i].date.slice(5,7)
+            //   console.log(a);
+            //   if(a=='12'){
+            //     for(j=0;j<data[i].productName.length;j++){
+            //       quantity+=data[i].productName[j].quantity
+            //     }
+            //   }
+              
+              
+              
+            // }
+            // dataquantity.push(quantity6);
+            
+              
+
+
+
+
+
+
+
+
+
+
+              console.log(dataquantity);
               let totalsale=0
               console.log(response.data)
               const orderCount=data.length
               for(let i=0;i<data.length;i++){
-                totalsale+=(data[i].quantity*data[i].price)
+                totalsale+=data[i].price
               }
-              res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale})
+              res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale,dataquantity:dataquantity})
           }).catch(err=>{
             res.send(err)
      })

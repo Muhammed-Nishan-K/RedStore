@@ -46,6 +46,15 @@ border-radius: 1rem;
 flex: 1 1 auto;
 padding: 1.5rem 1.5rem;
 }
+#cod{
+  display: none;
+}
+#wallet{
+  display: none;
+}
+.cc{
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -59,12 +68,12 @@ padding: 1.5rem 1.5rem;
   <div class="col-lg-9">
     <div class="accordion" id="accordionPayment">
       <!-- Credit card -->
-      <% if(price-cpn<=100000){%>
       <div class="accordion-item mb-3">
         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
           <div class="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false">
-            
+            <input type="radio" name="paymentOption" id="cod-btn" value="cashOnDelivery">
             <label class="form-check-label pt-1" for="payment1">
+
               Cash On Delivery
             </label>
           </div>
@@ -77,98 +86,51 @@ padding: 1.5rem 1.5rem;
             </svg>
           </span>
         </h2>
-        <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
+        <div id="cod" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
+          <% if(price-cpn<100000){ %>
           <a href="/api/order?index=<%=index%>" data-toggle="modal" data-target="#orderSuccessModal">
             <button class="btn btn-primary w-100 mt-2">Place order</button>
           </a>
+        <% }else{ %>
+          <p style="color: red; width: 100%;text-align: center;">Amound exeeds the limit</p>
+        <% } %>
         </div>
       </div>
-      <% }else{ %>
-        <div style="opacity: 50%;" class="accordion-item mb-3">
-          <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
-            <div class="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false">
-              
-              <label class="form-check-label pt-1" for="payment1">
-                Cash On Delivery
-              </label>
-            </div>
-            <span>
-              <svg width="34" height="25" xmlns="http://www.w3.org/2000/svg">
-                <g fill-rule="nonzero" fill="#333840">
-                  <path d="M29.418 2.083c1.16 0 2.101.933 2.101 2.084v16.666c0 1.15-.94 2.084-2.1 2.084H4.202A2.092 2.092 0 0 1 2.1 20.833V4.167c0-1.15.941-2.084 2.102-2.084h25.215ZM4.203 0C1.882 0 0 1.865 0 4.167v16.666C0 23.135 1.882 25 4.203 25h25.215c2.321 0 4.203-1.865 4.203-4.167V4.167C33.62 1.865 31.739 0 29.418 0H4.203Z"></path>
-                  <path d="M4.203 7.292c0-.576.47-1.042 1.05-1.042h4.203c.58 0 1.05.466 1.05 1.042v2.083c0 .575-.47 1.042-1.05 1.042H5.253c-.58 0-1.05-.467-1.05-1.042V7.292Zm0 6.25c0-.576.47-1.042 1.05-1.042H15.76c.58 0 1.05.466 1.05 1.042 0 .575-.47 1.041-1.05 1.041H5.253c-.58 0-1.05-.466-1.05-1.041Zm0 4.166c0-.575.47-1.041 1.05-1.041h2.102c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042H5.253c-.58 0-1.05-.466-1.05-1.042Zm6.303 0c0-.575.47-1.041 1.051-1.041h2.101c.58 0 1.051.466 1.051 1.041 0 .576-.47 1.042-1.05 1.042h-2.102c-.58 0-1.05-.466-1.05-1.042Zm6.304 0c0-.575.47-1.041 1.051-1.041h2.101c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042h-2.101c-.58 0-1.05-.466-1.05-1.042Zm6.304 0c0-.575.47-1.041 1.05-1.041h2.102c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042h-2.101c-.58 0-1.05-.466-1.05-1.042Z"></path>
-                </g>
-              </svg>
-            </span>
-          </h2>
-          <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
-            <a >
-              <button class="btn btn-primary w-100 mt-2">Place order</button>
-            </a>
-          </div>
-        </div>
-        <% } %>
-      <% if(price-cpn<=100000){ %>
+
       <div class="accordion-item mb-3">
         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
           <div class="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false">
-            
+            <input type="radio" name="paymentOption" id="wallet-btn" value="cashOnDelivery">
             <label class="form-check-label pt-1" for="payment1">
               Wallet
             </label>
-            <% if(price-cpn>wallet){ %>
-              <p style="color: red;">Insufficient balance</p>
-              <% } %>
+
           </div>
           <span>
             wallet:<%= wallet %>
             
           </span>
         </h2>
-        <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
+        <div id="wallet" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
           <% if(price-cpn<=wallet){ %>
           <a href="/api/order?index=<%=index%>&payment=wallet&couponcode=<%=couponcode %>">
             <button class="btn btn-primary w-100 mt-2">Place order</button>
           </a>
           <% }else{ %>
-            
-            <a>
-              <button class="btn btn-primary w-100 mt-2">Place order</button>
-            </a>
+            <% if(price-cpn>wallet){ %>
+              <p style="color: red; width: 100%;text-align: center;">Insufficient balance</p>
+              <% }else{ %>
+                <p style="color: red; width: 100%;text-align: center;">Amound exeeds the limit</p>
+                <% } %>
           <% } %>
         </div>
       </div>
-      <% }else{ %>
-        <div style="opacity: 50%;" class="accordion-item mb-3">
-          <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
-            <div class="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false">
-              
-              <label class="form-check-label pt-1" for="payment1">
-                Wallet
-              </label>
-            </div>
-            <span>
-              <svg width="34" height="25" xmlns="http://www.w3.org/2000/svg">
-                <g fill-rule="nonzero" fill="#333840">
-                  <path d="M29.418 2.083c1.16 0 2.101.933 2.101 2.084v16.666c0 1.15-.94 2.084-2.1 2.084H4.202A2.092 2.092 0 0 1 2.1 20.833V4.167c0-1.15.941-2.084 2.102-2.084h25.215ZM4.203 0C1.882 0 0 1.865 0 4.167v16.666C0 23.135 1.882 25 4.203 25h25.215c2.321 0 4.203-1.865 4.203-4.167V4.167C33.62 1.865 31.739 0 29.418 0H4.203Z"></path>
-                  <path d="M4.203 7.292c0-.576.47-1.042 1.05-1.042h4.203c.58 0 1.05.466 1.05 1.042v2.083c0 .575-.47 1.042-1.05 1.042H5.253c-.58 0-1.05-.467-1.05-1.042V7.292Zm0 6.25c0-.576.47-1.042 1.05-1.042H15.76c.58 0 1.05.466 1.05 1.042 0 .575-.47 1.041-1.05 1.041H5.253c-.58 0-1.05-.466-1.05-1.041Zm0 4.166c0-.575.47-1.041 1.05-1.041h2.102c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042H5.253c-.58 0-1.05-.466-1.05-1.042Zm6.303 0c0-.575.47-1.041 1.051-1.041h2.101c.58 0 1.051.466 1.051 1.041 0 .576-.47 1.042-1.05 1.042h-2.102c-.58 0-1.05-.466-1.05-1.042Zm6.304 0c0-.575.47-1.041 1.051-1.041h2.101c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042h-2.101c-.58 0-1.05-.466-1.05-1.042Zm6.304 0c0-.575.47-1.041 1.05-1.041h2.102c.58 0 1.05.466 1.05 1.041 0 .576-.47 1.042-1.05 1.042h-2.101c-.58 0-1.05-.466-1.05-1.042Z"></path>
-                </g>
-              </svg>
-            </span>
-          </h2>
-          <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment" >
-            <a>
-              <button class="btn btn-primary w-100 mt-2">Place order</button>
-            </a>
-          </div>
-        </div>
-      <% }%>
       <div class="accordion-item mb-3">
         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
           <div class="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false">
-            
+            <input type="radio" name="paymentOption" id="cc-btn" value="cashOnDelivery">
             <label class="form-check-label pt-1" for="payment1">
-              Credit card
+              Online Payment
             </label>
           </div>
           <span>
@@ -180,7 +142,7 @@ padding: 1.5rem 1.5rem;
             </svg>
           </span>
         </h2>
-        <form id="checkout-form">
+        <form id="checkout-form" class="cc">
           <button type="submit" class="btn btn-primary w-100 mt-2">Place order</button>
         </form>
         
@@ -285,6 +247,24 @@ padding: 1.5rem 1.5rem;
     var rzp = new Razorpay(options);
     rzp.open();
   }
+  var codbtn=document.getElementById("cod-btn")
+  codbtn.addEventListener('click',()=>{
+    document.getElementById('cod').style.display='block'
+    document.querySelector('.cc').style.display='none'
+    document.getElementById('wallet').style.display='none'
+  })
+  var wallet=document.getElementById("wallet-btn")
+  wallet.addEventListener('click',()=>{
+    document.getElementById('wallet').style.display='block'
+    document.querySelector('.cc').style.display='none'
+    document.getElementById('cod').style.display='none'
+  })
+  var ccbtn=document.getElementById("cc-btn")
+  ccbtn.addEventListener('click',()=>{
+    document.querySelector('.cc').style.display='block'
+    document.getElementById('wallet').style.display='none'
+    document.getElementById('cod').style.display='none'
+  })
 </script>
 
 <script>

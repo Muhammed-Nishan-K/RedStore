@@ -6,6 +6,7 @@ const nodemailer=require('nodemailer')
 const path=require("path")
 const userdb=require("../model/usersSchema")
 const dotenv=require("dotenv")
+const { log } = require('console')
 dotenv.config({path:"config.env"})
 
 
@@ -23,6 +24,7 @@ let transporter = nodemailer.createTransport({
 exports.sendOtp=async(email,res)=>{
     try{
         const otp=`${Math.floor(1000+Math.random()*9000)}`
+        console.log(otp);
         const mailoption={
             from:process.env.EMAIL_ADDRESS,
             to:email,
@@ -85,22 +87,26 @@ exports.compare=(req,res)=>{
         }
     })
 }
-exports.forgetcompare=(req,res)=>{
+exports.forgetcompare=  (req,res)=>{
     const a=req.body.a;
     const b=req.body.b;
     const c=req.body.c;
     const d=req.body.d;
     let sum=a+b+c+d;
 
-    const email=req.session.forgetemail;
-
-
-    otpdb.find({email:email}).then((data)=>{
+    const email=req.session.forgetemail??req.session.email;
+    otpdb.find({email:email}).then(async(data)=>{
         if(data){
             if(sum==data[0].otp){
-                
-            res.render('newpassword',{email:email})
-            otpdb.deleteOne({email:email}).then()
+                if(req.session.forgetemail){
+                    res.render('newpassword',{email:email});
+
+                    await userdb.updateOne({email: req.session.forgetemail}, {$set: {varify: true}});
+                   return  await otpdb.deleteOne({email:email});
+                }
+                await userdb.updateOne({email: req.session.email}, {$set: {varify: true}});
+                res.redirect('/');
+
             }
             else{
                 res.render('forgetvarifyotp',{email:email,id:id,status:true})

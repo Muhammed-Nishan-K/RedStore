@@ -55,6 +55,10 @@ app.use("/primg", express.static(path.resolve(__dirname, "images")));
 app.use("/", require("./server/routes/userRouter"));
 app.use("/", require("./server/routes/adminRouter"));
 
+// app.use('*',(req,res)=>{
+//   res.render('errorpage')
+// })
+
 app.listen(PORT, () =>
   console.log(`Server is running on http://localhost:${PORT}`)
 );

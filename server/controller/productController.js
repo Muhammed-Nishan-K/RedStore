@@ -88,7 +88,6 @@ exports.deletetrue=(req,res)=>{
   const eid=req.query.id;
 
   productdb.deleteOne({_id:eid}).then((data)=>{
-    fs.unlinkSync(`images/${req.query.img}`)
     res.send("<script>alert('Deleted successfully!'); window.location='/deleted-items';</script>");
   }).catch((err)=>{
     res.send(err)
@@ -209,4 +208,35 @@ exports.addreview=(req,res)=>{
     res.redirect( `/product-details?productId=${req.query.id}`)
   })
 
+}
+exports.single=(req,res)=>{
+  productdb.findOne({_id:req.session.prid})
+    
+  .then(data=>{
+      const data1=data
+      req.session.sum=data1.discount;
+      req.session.discount=data1.discount-data1.price
+      Userdb.find({email:req.session.email}).then((data)=>{
+          if(data.length==0){
+              res.render("singleproduct",{product:data1,varify:false})
+          }else{
+              if(data[0].varify=="true"){
+                  res.render("singleproduct",{product:data1,varify:true})
+              }
+              else{
+                  res.render("singleproduct",{product:data1,varify:false})
+              }
+              
+          }
+          
+      }).catch((err)=>{
+          res.redirect(('/err'))
+      })
+      // if(varify=="true"){
+      //     res.render("singleproduct",{product:data,varify:true})
+      // }else{
+      //     res.render("singleproduct",{product:data,varify:false})
+      // }
+      
+  })
 }
