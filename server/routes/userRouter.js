@@ -21,7 +21,7 @@ router.get('/logout',userServices.logout)//home
 router.get('/register',userServices.register) //home
 router.get('/product-details',userServices.productdetalis)// add user to another collction
 router.get('/cartpage',userauth.userauthMiddleware,userServices.cartshow)// add user to another collction
-router.post('/api/checkout',userauth.userauthMiddleware,userServices.checkout)// add user to another collction
+router.post('/api/checkout',userauth.userauthMiddleware,userauth.noaddress,userServices.checkout)// add user to another collction
 router.get('/checkout',userauth.userauthMiddleware,userServices.checkout1)// add user to another collction
 router.post('/payment',userauth.orderauth,userServices.payment)// add user to another collction
 router.get('/payment',userauth.orderauth,userServices.payment1)// add user to another collction

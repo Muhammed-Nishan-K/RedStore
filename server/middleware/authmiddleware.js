@@ -1,4 +1,5 @@
 const express=require("express");
+const Userdb = require("../model/usersSchema");
 
 
 exports.userauthMiddleware = (req, res, next) => {
@@ -24,4 +25,14 @@ exports.orderauth=(req,res,next)=>{
     return next();
   }
   res.redirect('/');
+}
+exports.noaddress=(req,res,next)=>{
+  const email=req.session.email;
+  Userdb.findOne({email:email}).then((data)=>{
+    if(data.address.length==0){
+      res.redirect('/address')
+    }else{
+      return next()
+    }
+  })
 }

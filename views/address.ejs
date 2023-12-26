@@ -61,18 +61,21 @@
 <body>
 
     <form action="/api/address" method="post">
+        <h2 style="width: 100%; text-align: center;">Add Your Address</h2>
         <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
-        <label for="addressLine1">House No</label>
-        <input type="number" id="line1" name="line1" required>
-        <label for="addressLine1">Phone</label>
-        <input type="number" id="line1" name="line2" required>
+        <input type="text" id="city" name="city" pattern=".{1,10}" title="City must be up to 10 characters" required>
+        
+        <label for="line1">House No:</label>
+        <input type="text" id="line1" name="line1" pattern="\d{1,10}" title="House No must be up to 10 digits" required>
+        
+        <label for="line2">Phone:</label>
+        <input type="text" id="line2" name="line2" pattern="\d{1,10}" title="Phone must be up to 10 digits" required>
 
         <label for="state">State:</label>
-        <input type="text" id="state" name="state" required>
+        <input type="text" id="state" name="state" pattern=".{1,10}" title="State must be up to 10 characters" required>
 
-        <label for="zipCode">PIN Code:</label>
-        <input type="number" id="pin" name="pin" required>
+        <label for="pin">PIN Code:</label>
+        <input type="text" id="pin" name="pin" pattern="\d{6}" title="PIN Code must be 6 digits" required>
 
         <button type="submit">Submit</button>
     </form>
