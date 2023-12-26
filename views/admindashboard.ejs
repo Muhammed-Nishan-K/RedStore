@@ -11,7 +11,46 @@
     .close:hover {
         background-color: #2980b9;
     }
+	#modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        #modal {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #close-modal {
+            cursor: pointer;
+            color: #007BFF;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+		#year {
+            display: block;
+        }
+		#year-form{
+			display: none;
+		}
+		#month-form{
+			display: none;
+		}
 </style>
+<% var id=id??'' %>
 
 	<!-- CONTENT -->
 	<section id="content">
@@ -106,9 +145,44 @@
 
 			
 		</main>
+		<div style="width: 100%; height: 50px;display: flex; justify-content: center; align-items: center;">
+			<button style="background-color: antiquewhite; border: none;" class="btn-block" onclick="openModal()">Filter</button>
+		</div>
+		
+
+    <div id="modal-overlay">
+        <div id="modal">
+			<div id="year">
+				<button style="background-color: antiquewhite; border: none;"> Filter by Year </button>
+			</div>
+			<div id="month">
+				<button style="background-color: antiquewhite; border: none;"> Filter by Month </button>
+			</div>
+			
+            <div id="year-form">
+				<form action="/admin-dash" method="get">
+					<input style="display: none;" type="text" value="year" name="id">
+					<input name="year" type="Number" placeholder="Enter the year">
+					<button style="background-color: antiquewhite; border: none;" type="submit"> Filter </button>
+				</form>
+			</div>
+            <div id="month-form">
+				<form action="/admin-dash" method="get">
+					<input style="display: none;" type="text" value="month" name="id">
+					<input name="year" type="Number" placeholder="Enter the year">
+					<input name="month" type="Number" placeholder="Enter the month">
+					<br>
+					<button style="background-color: antiquewhite; border: none;" type="submit"> Filter </button>
+				</form>
+			</div>
+			
+            <div id="close-modal" onclick="closeModal()">Close</div>
+        </div>
+    </div>
 		<div>
 			<canvas id="myChart"></canvas>
 		</div>
+		
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<!-- MAIN -->
 	</section>
@@ -134,13 +208,39 @@
     });
 </script>
 <script>
+	const id='<%=id%>'
+	if(id=='month'){
+		const ctx = document.getElementById('myChart');
+	var data='<%=dataquantity %>'
+	data = data.split(',').map(Number);
+	var label=[]
+	for(i=1;i<=30;i++){
+		label.push(i);
+	}
+	console.log(label);
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: label,
+		datasets: [{
+		  label: 'Sales',
+		  data: data,
+		  borderWidth: 1
+		}]
+	  },
+	  options: {
+		scales: {
+		  y: {
+			beginAtZero: true
+		  }
+		}
+	  }
+	});
+	}else{
 	const ctx = document.getElementById('myChart');
 	var data='<%=dataquantity %>'
-	 data=data.replace(/[,]/g, "");
-	 data=data.split('').map(value => Number(value))
-	
-	console.log(data,typeof data);
-  
+     data = data.split(',').map(Number);
+		console.log(data);
 	new Chart(ctx, {
 	  type: 'bar',
 	  data: {
@@ -159,6 +259,38 @@
 		}
 	  }
 	});
+}
+
+	function openModal() {
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+		function sortBy(type) {
+            // Handle sorting logic based on the selected type (year, month, day)
+            console.log('Sorting by:', type);
+			if(type=='year'){
+				document.getElementById('year').style.display='block'
+			}
+            // Retrieve the entered year value
+            
+
+            // Add your sorting code here
+        }
+		const year=document.getElementById('year')
+		year.addEventListener('click',()=>{
+			document.getElementById('year-form').style.display='block'
+			document.getElementById('month-form').style.display='none'
+			
+		})
+		const month=document.getElementById('month')
+		month.addEventListener('click',()=>{
+			document.getElementById('month-form').style.display='block'
+			document.getElementById('year-form').style.display='none'
+		})
 	
   </script>
 	

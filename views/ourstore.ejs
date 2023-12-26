@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Redstore</title>
+    <link rel="icon" type="image/png" href="/primg/logo-2.png">
     <!-- Font Awesome -->
 <link
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -47,6 +48,7 @@ rel="stylesheet"
 <body style="background: radial-gradient(#fff,#ffd6d6);">
     <!--Main Navigation-->
 <header>
+  <% var searchQuery=searchQuery??'' %>
     <!-- Jumbotron -->
     <div class="p-3 text-center  border-bottom">
       <div class="container">
@@ -58,7 +60,19 @@ rel="stylesheet"
             </a>
           </div>
           <!-- Left elements -->
-  
+          <div class="col-lg-5 mt-md-4 col-md-12 col-12">
+            <form action="/ourstore" method="get">
+            <div class="input-group  float-center">
+              <div class="form-outline bg-white" style="border-radius: 5px;">
+                <input type="search" value="<%= searchQuery %>" id="form1" name="search" class="form-control" />
+                <label class="form-label" for="form1">Search</label>
+              </div>
+              <button style="background-color: #3E4144" type="submit" class="btn shadow-0" >
+                <i style="color: white;" class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+          </div>
           <!-- Center elements -->
           <div class="order-lg-last col-lg-5 col-sm-8 col-8">
             <div class="d-flex float-end">
@@ -72,9 +86,7 @@ rel="stylesheet"
           <!-- Center elements -->
   
           <!-- Right elements -->
-          <div class="col-lg-5 col-md-12 col-12">
-            
-          </div>
+
           <!-- Right elements -->
         </div>
       </div>
@@ -270,9 +282,17 @@ rel="stylesheet"
                         <% } %>
                         ₹<%= products[i].price %>
                       </p>
+                      <div style="width: 100%; display: inline;">
+                        <a href="/api/addtocart?id=<%=products[i]._id%>" class="btn  shadow-0" style="background-color: #131921; color: white; font-weight: bolder; border-radius: 30px; height: 30px;"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+  
+                      <a href="/api/wishlist?id=<%=products[i]._id%>" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+                      </div>
                     </div>
+                    
+                    
                   </div>
                 </div>
+               
               <% } %>
             </div>
             

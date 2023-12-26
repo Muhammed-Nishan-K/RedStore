@@ -208,10 +208,11 @@ exports.sendotp=async(req,res)=>{
 }
 exports.forgetsendotp=(req,res)=>{
     const email=req.session.forgetemail;
+    const status=req.session.status??false;
     Userdb.find({email:email}).then((data)=>{
         const email=data[0].email;
         otpcontroller.sendOtp(email,res)
-        res.render('forgetvarifyotp',{email:email,status:false})
+        res.render('forgetvarifyotp',{email:email,status:status})
     }).catch((err)=>{
         res.redirect('/err')
     })
@@ -247,14 +248,19 @@ exports.forgetotp=(req,res)=>{
 
 exports.checkout=(req,res)=>{
     req.session.order=true;
-    const index=req.query.index??0
-    const id=req.query.id??""
+    req.session.index=req.query.index??0
+     req.session.prid=req.query.id??""
     console.log(req.session.sum);
     console.log(req.session.discount);
     req.session.price=req.session.sum-req.session.discount
+    res.redirect('/checkout');
+}
+exports.checkout1=(req,res)=>{
+    req.session.order=true;
+    
     const category=catdb.find({deleted:false})
     Userdb.findOne({email:req.session.email}).then((data)=>{
-        res.render('paymentpage',{user:data,index:index,price:req.session.sum,discount:req.session.discount,id:id,category:category});
+        res.render('paymentpage',{user:data,index:req.session.index,price:req.session.sum,discount:req.session.discount,category:category});
     }).catch((err)=>{
         res.redirect(('/err'))
     })
@@ -268,7 +274,7 @@ exports.payment=(req,res)=>{
     res.redirect(('/err'))
 })
     Userdb.findOne({email:req.session.email}).then((data)=>{
-        res.render('paymentpage1',{index:req.query.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:'none',category:category})
+        res.render('paymentpage1',{index:req.session.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:'none',category:category,status:true})
     }).catch((err)=>{
         res.redirect(('/err'))
     })
@@ -276,15 +282,14 @@ exports.payment=(req,res)=>{
    
 }
 exports.payment1=(req,res)=>{
-    const coupon=req.query.coupon??0
-    const id=req.query.id??""
+    const coupon=req.session.couponvalue??0
     const category=catdb.find({deleted:false}).then(data=>{
 
     }).catch((err)=>{
     res.redirect(('/err'))
 })
     Userdb.findOne({email:req.session.email}).then((data)=>{
-   res.render('paymentpage1',{index:req.query.index,price:req.session.price,id:id,coupon:coupon,wallet:data.wallet,couponcode:req.query.couponcode,category:category})
+   res.render('paymentpage1',{price:req.session.price,coupon:coupon,wallet:data.wallet,couponcode:req.session.couponcode,category:category,status:req.session.status})
 }).catch((err)=>{
     res.redirect(('/err'))
 })
@@ -463,11 +468,7 @@ exports.userwallet=async(req,res)=>{
     
 }
 exports.addtowallet=async(req,res)=>{
-    const category= await catdb.find({deleted:false}).then((data)=>{
-
-    }).catch(err=>{
-        res.redirect('/err')
-    })
+    const category= await catdb.find({deleted:false})
     res.render('addtowallet',{category:category})
 }
 
@@ -499,3 +500,6 @@ exports.contactus=async(req,res)=>{
 exports.err=(req,res)=>{
     res.render('errorpage');
 }
+
+
+

@@ -10,6 +10,7 @@ const fs = require('fs'); // Use the promises version of fs for async/await
    const path = require('path');
    const PDFDocument = require('pdfkit');
 const { log } = require('console')
+const offerdb = require('../model/offerSchema')
 
 exports.adminlogin=(req,res)=>{
     res.render('adminlogin')
@@ -20,137 +21,146 @@ exports.adminlogout=(req,res)=>{
 }
 
 exports.admindash=(req,res)=>{
-  console.log('gfdgfmhgf');
-  Userdb.find({})
-      .then(response=>{
-        const userCount=response.length
-          orderdb.find({status:"Delivered"})
-          .then(data=>{
-            console.log(data);
-            let dataquantity=[];
-            for(m=1;m<13;m++){
-              
-            let quantity=0
-            for(i=0;i<data.length;i++){
-              let a=data[i].date.slice(5,7)
-              console.log(a);
-              let b;
-              if(m<=10){
-                 b='0'+m
-              }else{
-                 b=m
-              }
-              
-              console.log(b);
-              if(a==b){
-                for(j=0;j<data[i].productName.length;j++){
-                  quantity+=data[i].productName[j].quantity
-                }
-              }
-              
-              
-              
-            }
-            dataquantity.push(quantity);
+  const year=parseInt(req.query.year);
+  const month=parseInt(req.query.month)??''
+  const id=req.query.id;
+  if(id=='year'){
+    Userdb.find({})
+    .then(response=>{
+      const userCount=response.length
+        orderdb.find({status:"Delivered",year:year})
+        .then(data=>{
+          console.log(data);
+          let dataquantity=[];
+          for(m=1;m<13;m++){
+            
+          let quantity=0
+          for(i=0;i<data.length;i++){
+            let a=data[i].date.slice(5,7)
+            console.log(a);
+            let b;
+            if(m<=10){
+               b='0'+m
+            }else{
+               b=m
             }
             
-            // let quantity2=0
-            // for(i=0;i<data.length;i++){
-            //   let a=data[i].date.slice(5,7)
-            //   console.log(a);
-            //   if(a=='02'){
-            //     for(j=0;j<data[i].productName.length;j++){
-            //       quantity+=data[i].productName[j].quantity
-            //     }
-            //   }
-              
-              
-              
-            // }
-            // dataquantity.push(quantity2);
-            // let quantity3=0
-            // for(i=0;i<data.length;i++){
-            //   let a=data[i].date.slice(5,7)
-            //   console.log(a);
-            //   if(a=='03'){
-            //     for(j=0;j<data[i].productName.length;j++){
-            //       quantity+=data[i].productName[j].quantity
-            //     }
-            //   }
-              
-              
-              
-            // }
-            // dataquantity.push(quantity3);
-            // let quantity4=0
-            // for(i=0;i<data.length;i++){
-            //   let a=data[i].date.slice(5,7)
-            //   console.log(a);
-            //   if(a=='04'){
-            //     for(j=0;j<data[i].productName.length;j++){
-            //       quantity+=data[i].productName[j].quantity
-            //     }
-            //   }
-              
-              
-              
-            // }
-            // dataquantity.push(quantity4);
-            // let quantity5=0
-            // for(i=0;i<data.length;i++){
-            //   let a=data[i].date.slice(5,7)
-            //   console.log(a);
-            //   if(a=='05'){
-            //     for(j=0;j<data[i].productName.length;j++){
-            //       quantity+=data[i].productName[j].quantity
-            //     }
-            //   }
-              
-              
-              
-            // }
-            // dataquantity.push(quantity5);
-            // let quantity6=0
-            // for(i=0;i<data.length;i++){
-            //   let a=data[i].date.slice(5,7)
-            //   console.log(a);
-            //   if(a=='12'){
-            //     for(j=0;j<data[i].productName.length;j++){
-            //       quantity+=data[i].productName[j].quantity
-            //     }
-            //   }
-              
-              
-              
-            // }
-            // dataquantity.push(quantity6);
-            
-              
-
-
-
-
-
-
-
-
-
-
-              console.log(dataquantity);
-              let totalsale=0
-              console.log(response.data)
-              const orderCount=data.length
-              for(let i=0;i<data.length;i++){
-                totalsale+=data[i].price
+            console.log(b);
+            if(a==b){
+              for(j=0;j<data[i].productName.length;j++){
+                quantity+=data[i].productName[j].quantity
               }
-              res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale,dataquantity:dataquantity})
-          }).catch(err=>{
-            res.send(err)
-     })
-          
-      }).catch(err=>{
+            }
+          }
+          dataquantity.push(quantity);
+          }
+            console.log(dataquantity);
+            let totalsale=0
+            console.log(response.data)
+            const orderCount=data.length
+            for(let i=0;i<data.length;i++){
+              totalsale+=data[i].price
+            }
+            res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale,dataquantity:dataquantity,id:id})
+        }).catch(err=>{
           res.send(err)
    })
+        
+    }).catch(err=>{
+        res.send(err)
+ })
+  }else if(id=='month'){
+    Userdb.find({})
+    .then(response=>{
+      const userCount=response.length
+        orderdb.find({status:"Delivered",month:month,year:year})
+        .then(data=>{
+          console.log(data);
+          let dataquantity=[];
+          for(m=1;m<30;m++){
+            
+          let quantity=0
+          for(i=0;i<data.length;i++){
+            let a=data[i].day
+            console.log(a);
+            let b;
+            if(m<=10){
+               b='0'+m
+            }else{
+               b=m
+            }
+            
+            console.log(b);
+            if(a==b){
+              for(j=0;j<data[i].productName.length;j++){
+                quantity+=data[i].productName[j].quantity
+              }
+            }
+          }
+          dataquantity.push(quantity);
+          }
+            console.log(dataquantity);
+            let totalsale=0
+            console.log(response.data)
+            const orderCount=data.length
+            for(let i=0;i<data.length;i++){
+              totalsale+=data[i].price
+            }
+            res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale,dataquantity:dataquantity,id:id})
+        }).catch(err=>{
+          res.send(err)
+   })
+        
+    }).catch(err=>{
+        res.send(err)
+ })
+  }else{
+    Userdb.find({})
+    .then(response=>{
+      const userCount=response.length
+        orderdb.find({status:"Delivered"})
+        .then(data=>{
+          console.log(data);
+          let dataquantity=[];
+          for(m=1;m<13;m++){
+            
+          let quantity=0
+          for(i=0;i<data.length;i++){
+            let a=data[i].date.slice(5,7)
+            console.log(a);
+            let b;
+            if(m<=10){
+               b='0'+m
+            }else{
+               b=m
+            }
+            
+            console.log(b);
+            if(a==b){
+              for(j=0;j<data[i].productName.length;j++){
+                quantity+=data[i].productName[j].quantity
+              }
+            }
+          }
+          dataquantity.push(quantity);
+          }
+            console.log(dataquantity);
+            let totalsale=0
+            console.log(response.data)
+            const orderCount=data.length
+            for(let i=0;i<data.length;i++){
+              totalsale+=data[i].price
+            }
+            res.render("admindashboard",{usercount:userCount,ordercount:orderCount,totalsale:totalsale,dataquantity:dataquantity,id:id})
+        }).catch(err=>{
+          res.send(err)
+   })
+        
+    }).catch(err=>{
+        res.send(err)
+ })
+  }
+  
 }
 exports.addimg=(req,res)=>{
   const id=req.query.id;
@@ -160,17 +170,6 @@ exports.addimg=(req,res)=>{
     res.render('uploadimg',{id:id,img:img})
   })
 }
-// exports.uploadimg=(req,res)=>{
-//   const id=req.query.id;
-//   console.log(id);
-//   productdb.find({_id:id}).then((data)=>{
-//     console.log(data+"this is data");
-//     const img= data[0].image;
-//     res.render('uploadimg',{id:id,img:['0']})
-//   })
-  
-// }
-
 exports.adminorder=(req,res)=>{
     
   axios.get(`http://localhost:3001/api/findorder`)
@@ -320,14 +319,19 @@ exports.banner=(req,res)=>{
   
 }
 
-exports.offer=(req,res)=>{
+exports.offer=async(req,res)=>{
+  const offer=await offerdb.find()
   coupondb.find().then((data)=>{
-    res.render('adminoffer',{coupon:data});
+    res.render('adminoffer',{coupon:data,offer:offer});
   })
   
 }
 exports.addcoupon=(req,res)=>{
   res.render('addcoupon');
+}
+exports.addoffer=async(req,res)=>{
+  const category=await catdb.find({deleted:false})
+  res.render('addoffer',{cat:category});
 }
 
 exports.createpdf=async(req,res)=>{
@@ -353,10 +357,10 @@ exports.createpdf=async(req,res)=>{
    
 }
 
-async function createpdf(filter) {
+async function createpdf() {
   const doc = new PDFDocument();
   const filePath = path.join(__dirname, 'sales_report.pdf');
-
+  const data=await orderdb.find({status:'Delivered'})
   const stream = fs.createWriteStream(filePath);
 
   return new Promise((resolve, reject) => {
@@ -369,9 +373,52 @@ async function createpdf(filter) {
       });
 
       doc.pipe(stream);
-      doc.text('Sales Report', 50, 50);
-      doc.text('Filter: ' + filter, 50, 80);
+      doc.fontSize(18).text('Sales report', { align: 'center' });
+      doc.moveDown();
+      doc.moveDown();
+      var totalsales=0
+      var totalprice=0
+      console.log(data);
+        for(let i=0;i<data.length;i++){
+          for(let j=0;j<data[i].productName.length;j++){
+            totalsales+=data[i].productName[j].quantity
+            totalprice+=data[i].price;
+          }
+        }
+        // Add order details
+        doc.fontSize(14).text('total sales: ' + totalsales, { align: 'right' });
+        doc.fontSize(14).text('total sales price: ' + totalprice, { align: 'right' });
+        doc.moveDown();
+        doc.moveDown();
+        doc.fontSize(14).text('Products:', { align: 'left' });
+        doc.moveDown();
+
+        // Loop through products and add details
+        for (let i = 0; i < data.length; i++) {
+          for(let j=0;j<data[i].productName.length;j++){
+            const product = data[i].productName[j];
+            doc.fontSize(14).text('Date: ' + data[i].date);
+            doc.fontSize(12)
+                .text('Product Name: ' + product.productName)
+                .text('Price: ' + product.price)
+                .text('Quantity: ' + product.quantity);
+                doc.moveDown();
+                doc.moveDown();
+                
+
+          }
+            
+        }
+
+        // Add order date
+
+        doc.moveDown();
+        doc.moveDown();
+
+        // Add total amount to the invoice
+        doc.fontSize(14).text('Copyright @ Redstore', { align: 'center' });
       doc.end();
   });
 }
   
+

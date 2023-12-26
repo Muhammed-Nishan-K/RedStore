@@ -76,6 +76,22 @@
     background-color:green;
     position: relative;
 }
+button {
+      padding: 8px 16px;
+      margin: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+    }
+    button.active {
+      background-color: #4CAF50; /* Green */
+    }
+
+    button.inactive {
+      background-color: #f44336; /* Red */
+    }
 </style>
 
 	<!-- CONTENT -->
@@ -91,7 +107,7 @@
 			<div class="container">
                 <!-- Search -->
                 <div id="search-baron"> 
-                  <h3>OFFER & COUPONS</h3>
+                  <h3>COUPONS</h3>
                 </div>
                 <div style="display: flex;justify-content: space-between;">
                     <div style="display: flex; justify-content: center; width: 100%; align-items: center;">
@@ -162,6 +178,108 @@
                         </tbody>
                     </table>
                 </form>
+                
+            </div>
+               
+
+			
+		</main>
+		<!-- MAIN -->
+	</section>
+	<section id="content">
+		<!-- NAVBAR -->
+	
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		
+
+			<div class="container">
+                <!-- Search -->
+                <div id="search-baron"> 
+                  <h3>OFFERS</h3>
+                </div>
+                <div style="display: flex;justify-content: space-between;">
+                    <div style="display: flex; justify-content: center; width: 100%; align-items: center;">
+                    
+                        <div style="width: 100%; " >
+                        <input type="text" name="name" placeholder="Search Here" id="name-search"  style="width: 30%;
+                        padding: .6em 1em;
+                        margin: .5em 0;
+                        border: 1px solid gray;
+                        font-family: 'Barlow', sans-serif;
+                        font-size: 1em;
+                        border-radius: 10px;">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    </div>
+                    <div style="height: 40px; display: flex; width: 50%; align-items:center; justify-content: space-between;">
+                        <a href="/addoffer"><button type="submit" style="background-color: rgb(245, 234, 234);" class="btn border-shadow update">
+                            <p style="padding: 0px; margin: 0px; color: rgb(0, 0, 0);">Add offer</p>
+                        </button></a>
+                            
+                    </div>
+                    
+                    
+                    
+                </div>
+
+
+                
+                <div style="width: 100%;height: 30px;"></div>
+                
+               
+                
+                <!-- form handling -->
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Discount</th>
+                                <th>Min Price</th>
+                                <th>EXP</th>
+                                <th>Change Satus</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <% for(let i=offer.length-1;i>=0;i--){ %>
+                                    <tr>
+                                <td><%= offer.length-i %></td>
+                                <td><%= offer[i].category %></td>
+                                <td><%= offer[i].discount %></td>
+                                <td><%= offer[i].min %></td>
+                                <td><%= offer[i].expdate %></td>
+                                <td>
+                                    <% if(offer[i].status=='active'){%>
+                                        <a href="/api/inactiveoffer?id=<%= offer[i]._id %>"><button  class="inactive">Inactive</button></a>
+                                        
+                                    <%}else{%>
+                                        <a href="/api/activeoffer?id=<%= offer[i]._id %>"><button  class="active">Active</button></a>
+                                        
+                                    <%}%>
+                                    
+                                    
+
+                                </td>
+                            
+                            <td>
+                               <% if(offer[i].status=='active'){%>
+                                    <input type="radio" name="status" id="status-green" value="red">
+                                <%}else{%>
+                                    <input type="radio" name="status" id="status-red" value="red">
+                                <%}%>
+                                
+                            </td>
+                        </tr>
+                                <% } %>
+                            
+                        </tbody>
+                    </table>
                 
             </div>
                

@@ -109,7 +109,7 @@ exports.forgetcompare=  (req,res)=>{
 
             }
             else{
-                res.render('forgetvarifyotp',{email:email,id:id,status:true})
+                res.render('forgetvarifyotp',{email:email,status:true})
             }
             
             
@@ -118,6 +118,6 @@ exports.forgetcompare=  (req,res)=>{
             res.render('sendotp',{email:email,status:true})
         }
     }).catch(()=>{
-        res.render('errorpage');
+        res.render('forgetvarifyotp',{email:email,status:true})
     })
 }

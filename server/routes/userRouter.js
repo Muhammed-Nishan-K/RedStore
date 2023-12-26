@@ -21,7 +21,8 @@ router.get('/logout',userServices.logout)//home
 router.get('/register',userServices.register) //home
 router.get('/product-details',userServices.productdetalis)// add user to another collction
 router.get('/cartpage',userauth.userauthMiddleware,userServices.cartshow)// add user to another collction
-router.post('/checkout',userauth.userauthMiddleware,userServices.checkout)// add user to another collction
+router.post('/api/checkout',userauth.userauthMiddleware,userServices.checkout)// add user to another collction
+router.get('/checkout',userauth.userauthMiddleware,userServices.checkout1)// add user to another collction
 router.post('/payment',userauth.orderauth,userServices.payment)// add user to another collction
 router.get('/payment',userauth.orderauth,userServices.payment1)// add user to another collction
 router.get('/wishlist',userauth.userauthMiddleware,userServices.listshow)// add user to another collction
@@ -56,7 +57,7 @@ router.post('/api/reset-password',userController.resetpass) //For creating new u
 router.post('/api/address',userController.addaddress) //For creating new user
 router.post('/api/forgot-password',userController.forgetpass) //For creating new user
 router.post('/api/aplaycoupon',coupon.aplaycoupon) //For creating new user
-router.get('/api/subfromwallet',coupon.sub) //For creating new user
+router.get('/api/removecoupon',coupon.removecoupon) //For creating new user
 router.get('/api/deleteaddress',userController.deleteaddress) //For creating new user
 router.get('/api/addtowallet',orderController.userwallet) //For creating new user
 router.post('/api/login',userController.isUser) //For login the user

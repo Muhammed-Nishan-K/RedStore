@@ -46,6 +46,15 @@ const orderschema = new mongoose.Schema({
     },
     payment:{
         type:String
+    },
+    day:{
+        type:Number
+    },
+    month:{
+        type:Number
+    },
+    year:{
+        type:Number
     }
 
 

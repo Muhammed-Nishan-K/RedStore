@@ -21,12 +21,44 @@ exports.aplaycoupon=(req,res)=>{
     const couponCode=req.body.cpn;
 
     coupondb.find({couponcode:couponCode,status:"active"}).then((data)=>{
+        if(data.length==0){
+            req.session.status=false
+            res.redirect(`/payment`)
+
+        }else{
+            req.session.price=req.session.price-data[0].discount;
+            req.session.couponvalue=data[0].discount
+            req.session.status=true
+            req.session.couponCode=couponCode
+        res.redirect(`/payment`);
+        }
         
-        req.session.price=req.session.price-data[0].discount;
-        res.redirect(`/payment?coupon=${data[0].discount}&id=${req.query.id}&index=${req.query.index}&couponcode=${couponCode}`);
+        
     })
 }
-exports.sub=(req,res)=>{
-
+exports.removecoupon=(req,res)=>{
+    const couponvalue =req.session.couponvalue
+    req.session.price=req.session.price+couponvalue;
+    req.session.couponCode='';
+    req.session.couponvalue='0';
+    req.session.status=true;
+    res.redirect('/payment')
     
 }
+// exports.removecoupon=(req,res)=>{
+//     const couponCode=req.body.cpn;
+
+//     coupondb.find({couponcode:couponCode,status:"active"}).then((data)=>{
+//         if(data.length==0){
+//             req.session.status=false
+//             res.redirect(`/payment?id=${req.query.id}&index=${req.query.index}&couponcode=${couponCode}`)
+
+//         }else{
+//             req.session.price=req.session.price+data[0].discount;
+//             req.session.status=true
+//         res.redirect(`/payment?coupon=${data[0].discount}&index=${req.query.index}&couponcode=${couponCode}`);
+//         }
+        
+        
+//     })
+// }

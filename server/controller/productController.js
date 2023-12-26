@@ -97,12 +97,12 @@ exports.deletetrue=(req,res)=>{
 exports.update=(req,res)=>{
   const eid=req.query.id;
     productdb.findOne({_id:eid}).then((data)=>{
-      cartdb.updateMany({productName:data.productName},{$set:{productName: req.body.productName,category: req.body.category,description: req.body.description,price: req.body.price,discount:req.body.Discount,quantity:1}}).then((data)=>{
+      cartdb.updateMany({productName:data.productName},{$set:{productName: req.body.productName,category: req.body.category,description: req.body.description,price: req.body.price,discount:req.body.Discount,quantity:req.body.quantity}}).then((data)=>{
 
       })
 })
     productdb.findOne({_id:eid}).then((data)=>{
-      wishdb.updateMany({productName:data.productName},{$set:{productName: req.body.productName,category: req.body.category,description: req.body.description,price: req.body.price,discount:req.body.Discount,quantity:1}}).then((data)=>{
+      wishdb.updateMany({productName:data.productName},{$set:{productName: req.body.productName,category: req.body.category,description: req.body.description,price: req.body.price,discount:req.body.Discount,quantity:req.body.quantity}}).then((data)=>{
 
       })
 })

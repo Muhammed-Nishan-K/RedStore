@@ -31,6 +31,11 @@ module.exports = {
     if (!emailPattern.test(req.body.email)) {
       res.render('userRegister',{message:'Enter the email in correct format'})
     }
+    Userdb.find({emial:req.body.email}).then(data=>{
+      if(data.length!=0){
+        return res.render('userRegister',{message:'Email Alredy exist'})
+      }
+    })
 
     // new user
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -50,7 +55,7 @@ module.exports = {
     try {
       const data = await user.save();
       req.session.email=req.body.email;
-      res.redirect('/otp');
+      return res.redirect('/otp');
     } catch (err) {
       res.redirect('/register');
     }

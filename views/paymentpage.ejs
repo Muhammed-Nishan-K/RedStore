@@ -140,7 +140,7 @@
                                   <%=user.address[i].state%>,
                                     <%=user.address[i].line1%>,
                                       <%=user.address[i].pin%> &nbsp;&nbsp;
-                                        <form action="/checkout?index=<%=i%>" method="post">
+                                        <form action="/api/checkout?index=<%=i%>" method="post">
                                         
                                                       <div class="mt-3">
                                                           <button type="submit" class="btn btn-success shadow-0 w-100 border">Select</button>
@@ -169,7 +169,7 @@
                   <div class="float-end d-flex">
 
                     <a href=""><button class="btn btn-light border">Cancel</button></a>
-                    <form action="/payment?index=<%=index%>" method="post">
+                    <form action="/payment" method="post">
                       <button type="submit" class="btn btn-success shadow-0 border">Continue</button>
                     </form>
                     

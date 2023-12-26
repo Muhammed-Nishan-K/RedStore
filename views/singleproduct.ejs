@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Redstore</title>
     <!-- Font Awesome -->
+    <link rel="icon" type="image/png" href="/primg/logo-2.png">
 <link
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 rel="stylesheet"
@@ -204,7 +205,7 @@ rel="stylesheet"
             <main class="col-lg-6">
               <div class="ps-lg-3">
                 <h4 class="title text-dark">
-                  <%=product.pname%>
+                  <%=product.productName%>
                 </h4>
                 <div class="d-flex flex-row my-3">
                   <div class="text-warning mb-1 me-2">
@@ -216,9 +217,12 @@ rel="stylesheet"
                     <span class="ms-1">
                       4.5
                     </span>
-                  </div>
-                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%=product.stock%></span>
+                  </div> <% if(product.quantity==0){ %>
+                    <span style="color: red;">Out of stock</span>
+                    <% }else{ %>
+                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%=product.quantity%></span>
                   <span class="text-success ms-2">In stock</span>
+                  <% } %>
                 </div>
       
                 <h1>
@@ -237,20 +241,50 @@ rel="stylesheet"
                 <hr />
       
                 
+                <% if(product.quantity==0){ %>
 
-                <form action="/checkout?id=<%=product._id%>" method="post">
-                  <input style="display: none;" type="number" value="<%=product.discount%>" name="price">
-              <input style="display: none;" type="number" value="<%=product.discount-product.price%>" name="discount">
-                <button type="submit" href="/checkout" class="btn  shadow-0" style="background-color: #FFA530; color: #131921; font-weight: bolder; border-radius: 30px; height: 40px;">Buy Now </button>
-                <a href="/api/addtocart?id=<%=product._id%>" class="btn  shadow-0" style="background-color: #131921; color: white; font-weight: bolder; border-radius: 30px; height: 40px;"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                  <button type="submit" class="btn shadow-0" id="buyNowButton" style="background-color: #FFA530; color: #131921; font-weight: bolder; border-radius: 30px; height: 40px;">Buy Now</button>
+                  <a href="/api/addtocart?id=<%=product._id%>" class="btn  shadow-0" style="background-color: #131921; color: white; font-weight: bolder; border-radius: 30px; height: 40px;"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+
+                  <a href="/api/wishlist?id=<%=product._id%>" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+
+                  <% }else{ %>
+
+                    <form action="/api/checkout?id=<%=product._id%>" method="post">
+                      <input style="display: none;" type="number" value="<%=product.discount%>" name="price">
+                  <input style="display: none;" type="number" value="<%=product.discount-product.price%>" name="discount">
+                    <button type="submit" href="/checkout" class="btn  shadow-0" style="background-color: #FFA530; color: #131921; font-weight: bolder; border-radius: 30px; height: 40px;">Buy Now </button>
+                    <a href="/api/addtocart?id=<%=product._id%>" class="btn  shadow-0" style="background-color: #131921; color: white; font-weight: bolder; border-radius: 30px; height: 40px;"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
 
                 <a href="/api/wishlist?id=<%=product._id%>" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
-              </form>
+                  </form>
+                    <% } %>
+                
+                
+              
               </div>
             </main>
           </div>
         </div>
       </section>
+      <div class="modal" tabindex="-1" role="dialog" id="outOfStockModal" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Out of Stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This product is currently out of stock. Please check back later.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="closemodal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
       <!-- content -->
       
       <section style="width: 100%;" class=" border-top py-4">
@@ -552,6 +586,29 @@ rel="stylesheet"
   <!-- Copyright -->
 </footer>
 <!-- Footer -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Assuming you have jQuery included in your project
+  $(document).ready(function() {
+      $('#buyNowButton').on('click', function() {
+          // Check your stock availability logic here
+          var isOutOfStock = true; // Set to true if out of stock, false otherwise
+
+          if (isOutOfStock) {
+              // Show the Bootstrap modal for out of stock
+              $('#outOfStockModal').modal('show');
+          } else {
+              // If not out of stock, proceed with the checkout
+              window.location.href = "/checkout";
+          }
+      });
+  });
+  function closemodal(){
+    $('#outOfStockModal').modal('hide');
+  }
+</script>
 <script>
   function userdetails(id){
       const productDetailURL = `/product-details?productId=${id}`;
@@ -559,6 +616,7 @@ rel="stylesheet"
   // Redirect to the user details page.
   window.location.href = productDetailURL;
 }
+
   
 </script>
 
@@ -668,6 +726,8 @@ imageZoom('featured')
 type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
 ></script>
+
+
 
 <!-- End of .container -->
 </body>

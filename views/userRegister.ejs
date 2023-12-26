@@ -609,8 +609,10 @@ p.copy-footer-29 a:hover {
 
     <div class="form-outline mb-4">
         <input type="email" name="email" id="email" class="form-control form-control-lg"
-            placeholder="Email" required />
+            placeholder="Email" pattern="[A-Za-z0-9]*[@](gmail)*[\.](com)$"
+            title="Please enter a valid email address" required />
     </div>
+    
 
     <div class="form-outline mb-4">
         <input type="tel" name="Phone" id="phone" class="form-control form-control-lg"
@@ -632,7 +634,7 @@ p.copy-footer-29 a:hover {
    
 
     <div class="d-flex justify-content-center">
-        <button style="border: 2px solid black; height: 50px;" type="submit" class="btn btn-register btn-block btn-lg">Register</button>
+        <button style="border: 2px solid black; height: 50px; width: 50%;" type="submit" class="btn btn-register btn-block btn-lg">Register</button>
     </div>
 
     <p class="text-center text-muted mt-5 mb-0">Already have an account? <a href="/login" class="btn-login"><u>Login here</u></a></p>
@@ -675,21 +677,27 @@ p.copy-footer-29 a:hover {
         const confirmPassword = document.getElementById('confirmPassword').value;
         const agreeCheckbox = document.getElementById('agreeCheckbox').checked;
 
-        if (name === '' || email === '' || phone === '' || password === '' || confirmPassword === '' ||
-            !agreeCheckbox) {
-            alert('Please fill in all fields and agree to the Terms of Service.');
-            return false;
-        }
+        if (name === '' || email === '' || phone === '' || password === '' || confirmPassword === '' || !agreeCheckbox) {
+    alert('Please fill in all fields and agree to the Terms of Service.');
+    return false;
+}
 
-        if (!/^\d{10}$/.test(phone)) {
-            alert('Phone number must be 10 digits long.');
-            return false;
-        }
+if (!/^\d{10}$/.test(phone)) {
+    alert('Phone number must be 10 digits long.');
+    return false;
+}
 
-        if (password !== confirmPassword) {
-            alert('Password and Confirm Password do not match.');
-            return false;
-        }
+// Email validation using a regular expression for common email formats
+if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+    alert('Please enter a valid email address.');
+    return false;
+}
+
+if (password !== confirmPassword) {
+    alert('Password and Confirm Password do not match.');
+    return false;
+}
+
 
         return true;
     }

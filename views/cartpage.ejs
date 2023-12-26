@@ -70,6 +70,7 @@
             <div class="m-4">
               <div class="container d-flex justify-content-between">
                 <h4 class="card-title mb-4">Your shopping cart</h4>
+                <span>Cart count:</span><span style="color: red;"><%= cart.length %></span>
                 <div>
                   <span>Update cart &nbsp;&nbsp;</span>
                   <i id="refresh" style="font-size: large; cursor: pointer;" class="fa-solid fa-rotate"></i>
@@ -141,7 +142,7 @@
                     <div class="float-md-end">
                       <a href="/api/addctow?productId=<%=cart[i]._id%>" class="btn btn-light border px-2 icon-hover-primary"><i
                           class="fas fa-heart fa-lg px-1 text-secondary"></i></a>
-                      <a href="/api/removecart?id=<%=cart[i]._id%>" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
+                      <a href="javascript:void(0);" onclick="confirmRemoval('<%=cart[i]._id%>')" class="btn btn-light border text-danger icon-hover-danger">Remove</a>
                     </div>
                   </div>
                   <%if(cart[i].catstatus==false||cart[i].deleted==true||cart[i].quantity==0){%>
@@ -167,6 +168,25 @@
             </div>
           </div>
         </div>
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      Are you sure you want to remove this item from the cart?
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" onclick="cancelRemoval()">Cancel</button>
+                      <a id="confirmRemoveBtn" href="#" class="btn btn-danger">Remove</a>
+                  </div>
+              </div>
+          </div>
+      </div>
         <!-- cart -->
         <!-- summary -->
         <div class="col-lg-3">
@@ -240,9 +260,28 @@
     <p id="message"></p>
   </div>
   <!-- cart + summary -->
-
+<!-- Include Bootstrap and jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
   <script>
+function confirmRemoval(itemId) {
+        // Set the href attribute dynamically based on the item ID
+        $('#confirmRemoveBtn').attr('href', '/api/removecart?id=' + itemId);
+
+        // Show the confirmation modal
+        $('#confirmationModal').modal('show');
+    }
+
+    // Function to handle cancellation
+    function cancelRemoval() {
+        // Clear the dynamically set href attribute
+        $('#confirmRemoveBtn').attr('href', '#');
+
+        // Close the confirmation modal
+        $('#confirmationModal').modal('hide');
+    }
     const refresh=document.getElementById('refresh')
 
     refresh.addEventListener('click',()=>{
@@ -254,6 +293,7 @@
 
 
   document.addEventListener("DOMContentLoaded",()=>{
+    
 
     function updateQuantity(prId, delta) {
   fetch(`/count-update?prId=${prId}&delta=${delta}`, {

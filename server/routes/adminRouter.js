@@ -28,6 +28,7 @@ const catcontroller=require("../controller/catController")
 const orderController=require("../controller/orderController")
 const banner=require('../controller/bannerController')
 const coupon=require("../controller/couponController")
+const offer=require('../controller/offerController')
 
 router.get("/adminlogin", adminServices.adminlogin); //adminlogin loginpage render
 router.get("/adminlogout", adminServices.adminlogout); //adminlogin loginpage render
@@ -40,6 +41,7 @@ router.get("/admin-products",isadmin.adminauthMiddleware, adminServices.adminpro
 router.get("/admin-users",isadmin.adminauthMiddleware, adminServices.adminusers);
 router.get("/admin-category",isadmin.adminauthMiddleware, adminServices.category);
 router.get("/addcoupon",isadmin.adminauthMiddleware, adminServices.addcoupon);
+router.get("/addoffer",isadmin.adminauthMiddleware, adminServices.addoffer);
 router.get("/admin-banner",isadmin.adminauthMiddleware, adminServices.banner);
 router.get("/admin-ofer",isadmin.adminauthMiddleware, adminServices.offer);
 router.get("/addproduct",isadmin.adminauthMiddleware, adminServices.addproduct);
@@ -62,6 +64,8 @@ router.post("/api/addbanner",upload.array("image"), banner.create);
 router.get("/api/showproduct",addproduct.find);
 router.get("/api/showdeletedproduct",addproduct.finddelete)
 router.get("/api/showcat",catcontroller.find);
+router.get("/api/inactiveoffer",offer.inactive);
+router.get("/api/activeoffer",offer.active);
 router.get("/api/showcatdelete",catcontroller.finddelete);
 router.get("/api/deletecoupon",coupon.delete);
 router.get("/api/deleteproduct",addproduct.delete);
@@ -75,6 +79,7 @@ router.get("/api/deletecattrue",catcontroller.deletetrue);
 router.get("/api/deleteproducttrue",addproduct.deletetrue);
 router.post("/api/updateproduct", addproduct.update) ; 
 router.post("/api/addcoupon", coupon.create) ; 
+router.post("/api/addoffer", offer.create) ; 
 router.post("/api/updateproduct", addproduct.update) ; 
 router.post("/api/addcat", catcontroller.create) ; 
 router.get("/api/findcat", catcontroller.find) ; 

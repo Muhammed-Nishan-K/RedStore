@@ -11,6 +11,9 @@
                 <div class="card border shadow-0">
                     <div class="m-4">
                         <h4 class="card-title mb-4">Your Wishlist</h4>
+                        <span>wishlist count:</span><span style="color: red;"><%= cart.length %></span>
+                        
+                        <p></p>
                         <% if(cart.length > 0){ %>
                         <% for(var i = 0; i < cart.length; i++) { %>
                         <div class="row gy-3 mb-4" onclick="userdetails('<%=cart[i]._id%>')">
