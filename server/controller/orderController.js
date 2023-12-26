@@ -42,7 +42,9 @@ exports.create=(req,res)=>{
                 });
                 neworder.save()
                 productdb.updateOne({_id:req.session.prid},{$inc:{quantity:-1}}).then((data)=>{
-
+                    cartadb.updateOne({email:req.session.email},{$set:{quantity:1}}).then((data)=>{
+                        
+                    })
                 })
                 if(req.query.payment=='wallet'){
                     Userdb.updateOne({email:req.session.email},{$inc:{wallet:-price}}).then((data)=>{
@@ -94,12 +96,18 @@ exports.create=(req,res)=>{
             neworder.save()
             for(i=0;i<data.length;i++){
             productdb.updateOne({productName: data[i].productName},{$inc:{quantity: -data[i].quantity}}).then((data1)=>{
-                
+                cartadb.updateOne({productName: data[i].productName,email:req.session.email},{$set:{quantity:1}}).then((data)=>{
+                        
+                })
 
             })
             productdb.findOne({productName: data[i].productName}).then((data2)=>{
                 if(data2.quantity==0){
                     cartadb.updateMany({productName: data2.productName,email:req.session.email},{$set:{quantity:0}}).then((data)=>{
+                        
+                    })
+                }else{
+                    cartadb.updateMany({productName: data2.productName,email:req.session.email},{$set:{quantity:1}}).then((data)=>{
                         
                     })
                 }
