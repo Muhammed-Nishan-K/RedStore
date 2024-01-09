@@ -59,6 +59,7 @@
 
   <!-- /include header -->
   <% var check=false%>
+  <% if(cart.length==0){check=true} %>
 
   <!-- cart + summary -->
   <section class=" my-5">
@@ -226,6 +227,7 @@
           <form action="/api/checkout" method="post">
             
               <% if(check==false) {%>
+                
                 <div class="mt-3">
                   <button  type="submit" class="btn btn-success shadow-0 w-100 border">Continue</button>
                     <a href="/ourstore?category=all&search=" class="btn btn-light w-100 border mt-2"> Back to shop </a>
@@ -243,9 +245,9 @@
               <div style="display: flex; width: 100%; justify-content: end;">
                 <span style="font-size: 13px;" id="popup-close" onclick="closePopupError()">✖ Close</span>
               </div>
-              <p id="popup-message">Please Remove the Unavailable/out of stock Products From cart</p>
+              <p id="popup-message">Cannot procced to checkout while there is no item in cart or with out of stock products</p>
               <!-- Add login and register links or buttons here -->
-              <a href="/cart">
+              <a href="/cartpage">
                 <button id="register-button" style="width: 60px;">Ok</button>
             </a>
         </div>
@@ -402,7 +404,7 @@ function showMessage(message){
     
       function closePopupError() {
         document.getElementById('overlayError').style.display = 'none';
-        document.getElementById('popupError').style.display = 'none';
+        document.getElementById('popupError').style.display ='none';
 }
 
   </script>

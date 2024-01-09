@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalistic Address Form</title>
+    <title>Red Store</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,19 +63,19 @@
     <form action="/api/address" method="post">
         <h2 style="width: 100%; text-align: center;">Add Your Address</h2>
         <label for="city">City:</label>
-        <input type="text" id="city" name="city" pattern=".{1,10}" title="City must be up to 10 characters" required>
+        <input type="text" id="city" name="city" pattern=".{3,12}" title="City must be up to 10 characters" required>
         
         <label for="line1">House No:</label>
-        <input type="text" id="line1" name="line1" pattern="\d{1,10}" title="House No must be up to 10 digits" required>
+        <input type="text" id="line1" name="line1" pattern="\d{1,5}" title="House No must be up to 10 digits" required>
         
         <label for="line2">Phone:</label>
-        <input type="text" id="line2" name="line2" pattern="\d{1,10}" title="Phone must be up to 10 digits" required>
+        <input type="text" id="line2" name="line2" pattern="\d{10}" title="Phone must be up to 10 digits" required>
 
         <label for="state">State:</label>
-        <input type="text" id="state" name="state" pattern=".{1,10}" title="State must be up to 10 characters" required>
+        <input type="text" id="state" name="state" pattern=".{3,11}" title="State must be up to 10 characters" required>
 
         <label for="pin">PIN Code:</label>
-        <input type="text" id="pin" name="pin" pattern="\d{6}" title="PIN Code must be 6 digits" required>
+        <input type="text" id="pin" name="pin" pattern="\d{4,6}" title="Enter a valid pincode" required>
 
         <button type="submit">Submit</button>
     </form>

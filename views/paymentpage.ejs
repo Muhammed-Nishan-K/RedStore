@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>RedStore</title>
   <link rel="icon" type="image/x-icon" href="images/fav.png">
 
 
@@ -41,21 +41,21 @@
                     <div class="col-6">
                       <p class="mb-0">Full name</p>
                       <div class="form-outline">
-                        <input type="text" id="typeText" value="  <%=user.name%>" class="form-control" />
+                        <input type="text" id="typeText" value="  <%=user.name%>" class="form-control" disabled  />
                       </div>
                     </div>
 
                     <div class="col-6 mb-3">
                       <p class="mb-0">Phone</p>
                       <div class="form-outline">
-                        <input type="tel" id="typePhone" value="  <%=user.phone%>" class="form-control" />
+                        <input type="tel" id="typePhone" value="  <%=user.phone%>" class="form-control" disabled />
                       </div>
                     </div>
 
                     <div class="col-6 mb-3">
                       <p class="mb-0">Email</p>
                       <div class="form-outline">
-                        <input type="email" id="typeEmail" value="  <%=user.email%>" class="form-control" />
+                        <input type="email" id="typeEmail" value="  <%=user.email%>" class="form-control" disabled />
                       </div>
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                       <p class="mb-0">Address</p>
                       <div class="form-outline">
                         <input type="text" id="typeText" placeholder="Type here" value="  <%=user.address[index].line1%>,<%=user.address[index].city%>"
-                          class="form-control" />
+                          class="form-control" disabled />
                       </div>
                     </div>
 
@@ -83,7 +83,7 @@
                       <p class="mb-0">City</p>
                       <div class="form-outline">
                         <input type="text" id="typeText" value="  <%=user.address[index].city%>" placeholder="city"
-                          class="form-control" />
+                          class="form-control" disabled />
                       </div>
                     </div>
 
@@ -91,21 +91,21 @@
                       <p class="mb-0">House NO.</p>
                       <div class="form-outline">
                         <input type="text" id="typeText" placeholder="Type here"
-                          value="  <%=user.address[index].line1%>" class="form-control" />
+                          value="  <%=user.address[index].line1%>" class="form-control" disabled />
                       </div>
                     </div>
 
                     <div class="col-sm-4 col-6 mb-3">
                       <p class="mb-0">Postal code</p>
                       <div class="form-outline">
-                        <input type="text" id="typeText" class="form-control" value=" <%=user.address[index].pin%>" />
+                        <input type="text" id="typeText" class="form-control" disabled value=" <%=user.address[index].pin%>" />
                       </div>
                     </div>
 
                     <div class="col-sm-4 col-6 mb-3">
                       <p class="mb-0">Alternate Number</p>
                       <div class="form-outline">
-                        <input type="text" id="typeText" class="form-control"
+                        <input type="text" id="typeText" class="form-control" disabled
                           value="  <%=user.address[index].line2%>" />
                       </div>
                     </div>
